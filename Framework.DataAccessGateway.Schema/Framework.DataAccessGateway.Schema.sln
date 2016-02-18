@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Framework.DataAccessGateway.Schema", "Framework.DataAccessGateway.Schema\Framework.DataAccessGateway.Schema.csproj", "{0A6FCD09-7DCE-4CA7-B665-2C58CC8B5245}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Debug", "Debug\Debug.csproj", "{3AE80A78-D82F-4C52-BD51-F767897E96A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0A6FCD09-7DCE-4CA7-B665-2C58CC8B5245}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A6FCD09-7DCE-4CA7-B665-2C58CC8B5245}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A6FCD09-7DCE-4CA7-B665-2C58CC8B5245}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AE80A78-D82F-4C52-BD51-F767897E96A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AE80A78-D82F-4C52-BD51-F767897E96A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AE80A78-D82F-4C52-BD51-F767897E96A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AE80A78-D82F-4C52-BD51-F767897E96A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
