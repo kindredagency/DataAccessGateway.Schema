@@ -45,12 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collection\DBSchemaConstraintDefinitionCollection.cs" />
-    <Compile Include="Collection\DBSchemaStoredProcedureDefinitionCollection.cs" />
-    <Compile Include="Collection\DBSchemaStoredProcedureParameterDefinitionCollection.cs" />
-    <Compile Include="Collection\DBSchemaTableColumnDefinitionCollection.cs" />
-    <Compile Include="Collection\DBSchemaTableDefinitionCollection.cs" />
-    <Compile Include="Collection\DBSchemaTriggerDefinitionCollection.cs" />
+    <Compile Include="DBSchemaConstraintDefinitionCollection.cs" />
+    <Compile Include="DBSchemaStoredProcedureDefinitionCollection.cs" />
+    <Compile Include="DBSchemaStoredProcedureParameterDefinitionCollection.cs" />
+    <Compile Include="DBSchemaTableColumnDefinitionCollection.cs" />
+    <Compile Include="DBSchemaTableDefinitionCollection.cs" />
+    <Compile Include="DBSchemaTriggerDefinitionCollection.cs" />
     <Compile Include="DataStructure\DBSchemaConstraintDefinition.cs" />
     <Compile Include="DataStructure\DBSchemaDBDefinition.cs" />
     <Compile Include="DataStructure\DBSchemaServerDefinition.cs" />
@@ -66,18 +66,19 @@
     <Compile Include="DataStructure\_SQLTable.cs" />
     <Compile Include="DataStructure\_SQLTableDefinition.cs" />
     <Compile Include="DataStructure\_SQLTrigger.cs" />
-    <Compile Include="Enum\ConstraintType.cs" />
-    <Compile Include="Enum\DBSchemaHandlerEnums.cs" />
-    <Compile Include="Exception\DBSchemaHandlerException.cs" />
+    <Compile Include="ConstraintType.cs" />
+    <Compile Include="DBSchemaHandlerEnums.cs" />
+    <Compile Include="DBSchemaHandlerException.cs" />
     <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="Handler\DBSchemaHandler.cs" />
-    <Compile Include="Handler\DBSchemaHandlerMSSQL.cs" />
-    <Compile Include="Interface\IDBSchemaHandler.cs" />
+    <Compile Include="DBSchemaHandler.cs" />
+    <Compile Include="DBSchemaHandlerMSSQL.cs" />
+    <Compile Include="IDBSchemaHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

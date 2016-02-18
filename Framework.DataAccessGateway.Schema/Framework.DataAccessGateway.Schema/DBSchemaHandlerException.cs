@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Framework.DataAccessGateway.Schema.Exception
+namespace Framework.DataAccessGateway.Schema
 {
     /// <summary>
     ///     Summary description for DBHandlerException.

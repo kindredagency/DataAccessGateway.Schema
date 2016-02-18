@@ -5,7 +5,7 @@ using Framework.DataAccessGateway.Schema.Enum;
 using Framework.DataAccessGateway.Schema.Interface;
 using Framework.DataAccessGateway.Core;
 
-namespace Framework.DataAccessGateway.Schema.Handler
+namespace Framework.DataAccessGateway.Schema
 {
     /// <summary>
     ///     Summary description for DBSchemaHandler

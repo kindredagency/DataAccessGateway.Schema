@@ -8,7 +8,7 @@ using Framework.DataAccessGateway.Core;
 using Framework.DataAccessGateway.Schema.Exception;
 using Framework.DataAccessGateway.Schema.Collection;
 
-namespace Framework.DataAccessGateway.Schema.Handler
+namespace Framework.DataAccessGateway.Schema
 {
     internal class DBSchemaHandlerMSSQL : IDBSchemaHandler
     {

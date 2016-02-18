@@ -2,31 +2,31 @@
 using System.Collections.Generic;
 using Framework.DataAccessGateway.Schema.DataStructure;
 
-namespace Framework.DataAccessGateway.Schema.Collection
+namespace Framework.DataAccessGateway.Schema
 {
     /// <summary>
-    /// Class DBSchemaTableDefinitionCollection.
+    /// Class DBSchemaStoredProcedureParameterDefinitionCollection.
     /// </summary>
-    public class DBSchemaTableDefinitionCollection : IList<DBSchemaTableDefinition>
+    public class DBSchemaStoredProcedureParameterDefinitionCollection : IList<DBSchemaStoredProcedureParameterDefinition>
     {
         #region Private Variables
 
-        private readonly List<DBSchemaTableDefinition> tables = new List<DBSchemaTableDefinition>();
+        private readonly List<DBSchemaStoredProcedureParameterDefinition> DBSchemaStoredProcedureParameterDefinitionList = new List<DBSchemaStoredProcedureParameterDefinition>();
 
         #endregion Private Variables
 
-        #region IEnumerable<DBSchemaTableDefinition> Members
+        #region IEnumerable<DBSchemaStoredProcedureParameterDefinition> Members
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-        public IEnumerator<DBSchemaTableDefinition> GetEnumerator()
+        public IEnumerator<DBSchemaStoredProcedureParameterDefinition> GetEnumerator()
         {
-            return tables.GetEnumerator();
+            return DBSchemaStoredProcedureParameterDefinitionList.GetEnumerator();
         }
 
-        #endregion IEnumerable<DBSchemaTableDefinition> Members
+        #endregion IEnumerable<DBSchemaStoredProcedureParameterDefinition> Members
 
         #region IEnumerable Members
 
@@ -36,21 +36,21 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return tables.GetEnumerator();
+            return DBSchemaStoredProcedureParameterDefinitionList.GetEnumerator();
         }
 
         #endregion IEnumerable Members
 
-        #region IList<DBSchemaTableDefinition> Members
+        #region IList<DBSchemaStoredProcedureParameterDefinition> Members
 
         /// <summary>
         /// Indexes the of.
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns>System.Int32.</returns>
-        public int IndexOf(DBSchemaTableDefinition item)
+        public int IndexOf(DBSchemaStoredProcedureParameterDefinition item)
         {
-            return tables.IndexOf(item);
+            return DBSchemaStoredProcedureParameterDefinitionList.IndexOf(item);
         }
 
         /// <summary>
@@ -58,9 +58,9 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="item">The item.</param>
-        public void Insert(int index, DBSchemaTableDefinition item)
+        public void Insert(int index, DBSchemaStoredProcedureParameterDefinition item)
         {
-            tables.Insert(index, item);
+            DBSchemaStoredProcedureParameterDefinitionList.Insert(index, item);
         }
 
         /// <summary>
@@ -69,64 +69,31 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// <param name="index">The index.</param>
         public void RemoveAt(int index)
         {
-            tables.RemoveAt(index);
+            DBSchemaStoredProcedureParameterDefinitionList.RemoveAt(index);
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="DBSchemaTableDefinition"/> at the specified index.
+        /// Gets or sets the <see cref="DBSchemaStoredProcedureParameterDefinition"/> at the specified index.
         /// </summary>
         /// <param name="index">The index.</param>
-        /// <returns>DBSchemaTableDefinition.</returns>
-        public DBSchemaTableDefinition this[int index]
+        /// <returns>DBSchemaStoredProcedureParameterDefinition.</returns>
+        public DBSchemaStoredProcedureParameterDefinition this[int index]
         {
-            get { return tables[index]; }
-            set { tables[index] = value; }
+            get { return DBSchemaStoredProcedureParameterDefinitionList[index]; }
+            set { DBSchemaStoredProcedureParameterDefinitionList[index] = value; }
         }
 
-        /// <summary>
-        /// Gets or sets the <see cref="DBSchemaTableDefinition"/> with the specified name.
-        /// </summary>
-        /// <param name="name">The name.</param>
-        /// <returns>DBSchemaTableDefinition.</returns>
-        public DBSchemaTableDefinition this[string name]
-        {
-            get
-            {
-                foreach (var dbSchemaTableDefinition in tables)
-                {
-                    if (dbSchemaTableDefinition.TableName == name)
-                    {
-                        return dbSchemaTableDefinition;
-                    }
-                }
+        #endregion IList<DBSchemaStoredProcedureParameterDefinition> Members
 
-                return null;
-            }
-            set
-            {
-                DBSchemaTableDefinition tempDbSchemaTableDefinition = null;
-                foreach (var dbSchemaTableDefinition in tables)
-                {
-                    if (dbSchemaTableDefinition.TableName == name)
-                    {
-                        tempDbSchemaTableDefinition = dbSchemaTableDefinition;
-                    }
-                }
-                tempDbSchemaTableDefinition = value;
-            }
-        }
-
-        #endregion IList<DBSchemaTableDefinition> Members
-
-        #region ICollection<DBSchemaTableDefinition> Members
+        #region ICollection<DBSchemaStoredProcedureParameterDefinition> Members
 
         /// <summary>
         /// Adds the specified item.
         /// </summary>
         /// <param name="item">The item.</param>
-        public void Add(DBSchemaTableDefinition item)
+        public void Add(DBSchemaStoredProcedureParameterDefinition item)
         {
-            tables.Add(item);
+            DBSchemaStoredProcedureParameterDefinitionList.Add(item);
         }
 
         /// <summary>
@@ -134,7 +101,7 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// </summary>
         public void Clear()
         {
-            tables.Clear();
+            DBSchemaStoredProcedureParameterDefinitionList.Clear();
         }
 
         /// <summary>
@@ -142,9 +109,9 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns><c>true</c> if [contains] [the specified item]; otherwise, <c>false</c>.</returns>
-        public bool Contains(DBSchemaTableDefinition item)
+        public bool Contains(DBSchemaStoredProcedureParameterDefinition item)
         {
-            return tables.Contains(item);
+            return DBSchemaStoredProcedureParameterDefinitionList.Contains(item);
         }
 
         /// <summary>
@@ -152,9 +119,9 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// </summary>
         /// <param name="array">The array.</param>
         /// <param name="arrayIndex">Index of the array.</param>
-        public void CopyTo(DBSchemaTableDefinition[] array, int arrayIndex)
+        public void CopyTo(DBSchemaStoredProcedureParameterDefinition[] array, int arrayIndex)
         {
-            tables.CopyTo(array, arrayIndex);
+            DBSchemaStoredProcedureParameterDefinitionList.CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -163,7 +130,7 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// <value>The count.</value>
         public int Count
         {
-            get { return tables.Count; }
+            get { return DBSchemaStoredProcedureParameterDefinitionList.Count; }
         }
 
         /// <summary>
@@ -180,11 +147,11 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns><c>true</c> if item cannot be found then, <c>false</c> otherwise.</returns>
-        public bool Remove(DBSchemaTableDefinition item)
+        public bool Remove(DBSchemaStoredProcedureParameterDefinition item)
         {
-            return tables.Remove(item);
+            return DBSchemaStoredProcedureParameterDefinitionList.Remove(item);
         }
 
-        #endregion ICollection<DBSchemaTableDefinition> Members
+        #endregion ICollection<DBSchemaStoredProcedureParameterDefinition> Members
     }
 }

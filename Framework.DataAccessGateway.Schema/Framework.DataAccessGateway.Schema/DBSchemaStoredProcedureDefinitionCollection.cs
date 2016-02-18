@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Framework.DataAccessGateway.Schema.DataStructure;
 
-namespace Framework.DataAccessGateway.Schema.Collection
+namespace Framework.DataAccessGateway.Schema
 {
     /// <summary>
     /// Class DBSchemaStoredProcedureDefinitionCollection.

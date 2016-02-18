@@ -4,12 +4,12 @@ using Framework.DataAccessGateway.Schema.Collection;
 using Framework.DataAccessGateway.Schema.DataStructure;
 using Framework.DataAccessGateway.Schema.Enum;
 
-namespace Framework.DataAccessGateway.Schema.Interface
+namespace Framework.DataAccessGateway.Schema
 {
     /// <summary>
     ///     Summary description for IDBSchemaHandler
     /// </summary>
-    internal interface IDBSchemaHandler : IDisposable
+    public interface IDBSchemaHandler : IDisposable
     {
         #region Public Properties
 

@@ -2,32 +2,31 @@
 using System.Collections.Generic;
 using Framework.DataAccessGateway.Schema.DataStructure;
 
-namespace Framework.DataAccessGateway.Schema.Collection
+namespace Framework.DataAccessGateway.Schema
 {
     /// <summary>
-    /// Class DBSchemaConstraintDefinitionCollection.
+    /// Class DBSchemaTableDefinitionCollection.
     /// </summary>
-    public class DBSchemaConstraintDefinitionCollection : IList<DBSchemaConstraintDefinition>
+    public class DBSchemaTableDefinitionCollection : IList<DBSchemaTableDefinition>
     {
         #region Private Variables
 
-        private readonly List<DBSchemaConstraintDefinition> dbSchemaConstraintDefinitionList =
-            new List<DBSchemaConstraintDefinition>();
+        private readonly List<DBSchemaTableDefinition> tables = new List<DBSchemaTableDefinition>();
 
         #endregion Private Variables
 
-        #region IEnumerable<DBSchemaConstraintDefinition> Members
+        #region IEnumerable<DBSchemaTableDefinition> Members
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-        public IEnumerator<DBSchemaConstraintDefinition> GetEnumerator()
+        public IEnumerator<DBSchemaTableDefinition> GetEnumerator()
         {
-            return dbSchemaConstraintDefinitionList.GetEnumerator();
+            return tables.GetEnumerator();
         }
 
-        #endregion IEnumerable<DBSchemaConstraintDefinition> Members
+        #endregion IEnumerable<DBSchemaTableDefinition> Members
 
         #region IEnumerable Members
 
@@ -37,21 +36,21 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return dbSchemaConstraintDefinitionList.GetEnumerator();
+            return tables.GetEnumerator();
         }
 
         #endregion IEnumerable Members
 
-        #region IList<DBSchemaConstraintDefinition> Members
+        #region IList<DBSchemaTableDefinition> Members
 
         /// <summary>
         /// Indexes the of.
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns>System.Int32.</returns>
-        public int IndexOf(DBSchemaConstraintDefinition item)
+        public int IndexOf(DBSchemaTableDefinition item)
         {
-            return dbSchemaConstraintDefinitionList.IndexOf(item);
+            return tables.IndexOf(item);
         }
 
         /// <summary>
@@ -59,9 +58,9 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="item">The item.</param>
-        public void Insert(int index, DBSchemaConstraintDefinition item)
+        public void Insert(int index, DBSchemaTableDefinition item)
         {
-            dbSchemaConstraintDefinitionList.Insert(index, item);
+            tables.Insert(index, item);
         }
 
         /// <summary>
@@ -70,31 +69,64 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// <param name="index">The index.</param>
         public void RemoveAt(int index)
         {
-            dbSchemaConstraintDefinitionList.RemoveAt(index);
+            tables.RemoveAt(index);
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="DBSchemaConstraintDefinition"/> at the specified index.
+        /// Gets or sets the <see cref="DBSchemaTableDefinition"/> at the specified index.
         /// </summary>
         /// <param name="index">The index.</param>
-        /// <returns>DBSchemaConstraintDefinition.</returns>
-        public DBSchemaConstraintDefinition this[int index]
+        /// <returns>DBSchemaTableDefinition.</returns>
+        public DBSchemaTableDefinition this[int index]
         {
-            get { return dbSchemaConstraintDefinitionList[index]; }
-            set { dbSchemaConstraintDefinitionList[index] = value; }
+            get { return tables[index]; }
+            set { tables[index] = value; }
         }
 
-        #endregion IList<DBSchemaConstraintDefinition> Members
+        /// <summary>
+        /// Gets or sets the <see cref="DBSchemaTableDefinition"/> with the specified name.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>DBSchemaTableDefinition.</returns>
+        public DBSchemaTableDefinition this[string name]
+        {
+            get
+            {
+                foreach (var dbSchemaTableDefinition in tables)
+                {
+                    if (dbSchemaTableDefinition.TableName == name)
+                    {
+                        return dbSchemaTableDefinition;
+                    }
+                }
 
-        #region ICollection<DBSchemaConstraintDefinition> Members
+                return null;
+            }
+            set
+            {
+                DBSchemaTableDefinition tempDbSchemaTableDefinition = null;
+                foreach (var dbSchemaTableDefinition in tables)
+                {
+                    if (dbSchemaTableDefinition.TableName == name)
+                    {
+                        tempDbSchemaTableDefinition = dbSchemaTableDefinition;
+                    }
+                }
+                tempDbSchemaTableDefinition = value;
+            }
+        }
+
+        #endregion IList<DBSchemaTableDefinition> Members
+
+        #region ICollection<DBSchemaTableDefinition> Members
 
         /// <summary>
         /// Adds the specified item.
         /// </summary>
         /// <param name="item">The item.</param>
-        public void Add(DBSchemaConstraintDefinition item)
+        public void Add(DBSchemaTableDefinition item)
         {
-            dbSchemaConstraintDefinitionList.Add(item);
+            tables.Add(item);
         }
 
         /// <summary>
@@ -102,17 +134,17 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// </summary>
         public void Clear()
         {
-            dbSchemaConstraintDefinitionList.Clear();
+            tables.Clear();
         }
 
         /// <summary>
-        /// Determines whether /[contains] [the specified item].
+        /// Determines whether [contains] [the specified item].
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns><c>true</c> if [contains] [the specified item]; otherwise, <c>false</c>.</returns>
-        public bool Contains(DBSchemaConstraintDefinition item)
+        public bool Contains(DBSchemaTableDefinition item)
         {
-            return dbSchemaConstraintDefinitionList.Contains(item);
+            return tables.Contains(item);
         }
 
         /// <summary>
@@ -120,9 +152,9 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// </summary>
         /// <param name="array">The array.</param>
         /// <param name="arrayIndex">Index of the array.</param>
-        public void CopyTo(DBSchemaConstraintDefinition[] array, int arrayIndex)
+        public void CopyTo(DBSchemaTableDefinition[] array, int arrayIndex)
         {
-            dbSchemaConstraintDefinitionList.CopyTo(array, arrayIndex);
+            tables.CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -131,7 +163,7 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// <value>The count.</value>
         public int Count
         {
-            get { return dbSchemaConstraintDefinitionList.Count; }
+            get { return tables.Count; }
         }
 
         /// <summary>
@@ -148,11 +180,11 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns><c>true</c> if item cannot be found then, <c>false</c> otherwise.</returns>
-        public bool Remove(DBSchemaConstraintDefinition item)
+        public bool Remove(DBSchemaTableDefinition item)
         {
-            return dbSchemaConstraintDefinitionList.Remove(item);
+            return tables.Remove(item);
         }
 
-        #endregion ICollection<DBSchemaConstraintDefinition> Members
+        #endregion ICollection<DBSchemaTableDefinition> Members
     }
 }

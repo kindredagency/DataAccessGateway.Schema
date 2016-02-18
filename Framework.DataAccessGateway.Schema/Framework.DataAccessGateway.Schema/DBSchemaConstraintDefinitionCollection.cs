@@ -2,31 +2,32 @@
 using System.Collections.Generic;
 using Framework.DataAccessGateway.Schema.DataStructure;
 
-namespace Framework.DataAccessGateway.Schema.Collection
+namespace Framework.DataAccessGateway.Schema
 {
     /// <summary>
-    /// Class DBSchemaStoredProcedureParameterDefinitionCollection.
+    /// Class DBSchemaConstraintDefinitionCollection.
     /// </summary>
-    public class DBSchemaStoredProcedureParameterDefinitionCollection : IList<DBSchemaStoredProcedureParameterDefinition>
+    public class DBSchemaConstraintDefinitionCollection : IList<DBSchemaConstraintDefinition>
     {
         #region Private Variables
 
-        private readonly List<DBSchemaStoredProcedureParameterDefinition> DBSchemaStoredProcedureParameterDefinitionList = new List<DBSchemaStoredProcedureParameterDefinition>();
+        private readonly List<DBSchemaConstraintDefinition> dbSchemaConstraintDefinitionList =
+            new List<DBSchemaConstraintDefinition>();
 
         #endregion Private Variables
 
-        #region IEnumerable<DBSchemaStoredProcedureParameterDefinition> Members
+        #region IEnumerable<DBSchemaConstraintDefinition> Members
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-        public IEnumerator<DBSchemaStoredProcedureParameterDefinition> GetEnumerator()
+        public IEnumerator<DBSchemaConstraintDefinition> GetEnumerator()
         {
-            return DBSchemaStoredProcedureParameterDefinitionList.GetEnumerator();
+            return dbSchemaConstraintDefinitionList.GetEnumerator();
         }
 
-        #endregion IEnumerable<DBSchemaStoredProcedureParameterDefinition> Members
+        #endregion IEnumerable<DBSchemaConstraintDefinition> Members
 
         #region IEnumerable Members
 
@@ -36,21 +37,21 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return DBSchemaStoredProcedureParameterDefinitionList.GetEnumerator();
+            return dbSchemaConstraintDefinitionList.GetEnumerator();
         }
 
         #endregion IEnumerable Members
 
-        #region IList<DBSchemaStoredProcedureParameterDefinition> Members
+        #region IList<DBSchemaConstraintDefinition> Members
 
         /// <summary>
         /// Indexes the of.
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns>System.Int32.</returns>
-        public int IndexOf(DBSchemaStoredProcedureParameterDefinition item)
+        public int IndexOf(DBSchemaConstraintDefinition item)
         {
-            return DBSchemaStoredProcedureParameterDefinitionList.IndexOf(item);
+            return dbSchemaConstraintDefinitionList.IndexOf(item);
         }
 
         /// <summary>
@@ -58,9 +59,9 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="item">The item.</param>
-        public void Insert(int index, DBSchemaStoredProcedureParameterDefinition item)
+        public void Insert(int index, DBSchemaConstraintDefinition item)
         {
-            DBSchemaStoredProcedureParameterDefinitionList.Insert(index, item);
+            dbSchemaConstraintDefinitionList.Insert(index, item);
         }
 
         /// <summary>
@@ -69,31 +70,31 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// <param name="index">The index.</param>
         public void RemoveAt(int index)
         {
-            DBSchemaStoredProcedureParameterDefinitionList.RemoveAt(index);
+            dbSchemaConstraintDefinitionList.RemoveAt(index);
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="DBSchemaStoredProcedureParameterDefinition"/> at the specified index.
+        /// Gets or sets the <see cref="DBSchemaConstraintDefinition"/> at the specified index.
         /// </summary>
         /// <param name="index">The index.</param>
-        /// <returns>DBSchemaStoredProcedureParameterDefinition.</returns>
-        public DBSchemaStoredProcedureParameterDefinition this[int index]
+        /// <returns>DBSchemaConstraintDefinition.</returns>
+        public DBSchemaConstraintDefinition this[int index]
         {
-            get { return DBSchemaStoredProcedureParameterDefinitionList[index]; }
-            set { DBSchemaStoredProcedureParameterDefinitionList[index] = value; }
+            get { return dbSchemaConstraintDefinitionList[index]; }
+            set { dbSchemaConstraintDefinitionList[index] = value; }
         }
 
-        #endregion IList<DBSchemaStoredProcedureParameterDefinition> Members
+        #endregion IList<DBSchemaConstraintDefinition> Members
 
-        #region ICollection<DBSchemaStoredProcedureParameterDefinition> Members
+        #region ICollection<DBSchemaConstraintDefinition> Members
 
         /// <summary>
         /// Adds the specified item.
         /// </summary>
         /// <param name="item">The item.</param>
-        public void Add(DBSchemaStoredProcedureParameterDefinition item)
+        public void Add(DBSchemaConstraintDefinition item)
         {
-            DBSchemaStoredProcedureParameterDefinitionList.Add(item);
+            dbSchemaConstraintDefinitionList.Add(item);
         }
 
         /// <summary>
@@ -101,17 +102,17 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// </summary>
         public void Clear()
         {
-            DBSchemaStoredProcedureParameterDefinitionList.Clear();
+            dbSchemaConstraintDefinitionList.Clear();
         }
 
         /// <summary>
-        /// Determines whether [contains] [the specified item].
+        /// Determines whether /[contains] [the specified item].
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns><c>true</c> if [contains] [the specified item]; otherwise, <c>false</c>.</returns>
-        public bool Contains(DBSchemaStoredProcedureParameterDefinition item)
+        public bool Contains(DBSchemaConstraintDefinition item)
         {
-            return DBSchemaStoredProcedureParameterDefinitionList.Contains(item);
+            return dbSchemaConstraintDefinitionList.Contains(item);
         }
 
         /// <summary>
@@ -119,9 +120,9 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// </summary>
         /// <param name="array">The array.</param>
         /// <param name="arrayIndex">Index of the array.</param>
-        public void CopyTo(DBSchemaStoredProcedureParameterDefinition[] array, int arrayIndex)
+        public void CopyTo(DBSchemaConstraintDefinition[] array, int arrayIndex)
         {
-            DBSchemaStoredProcedureParameterDefinitionList.CopyTo(array, arrayIndex);
+            dbSchemaConstraintDefinitionList.CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -130,7 +131,7 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// <value>The count.</value>
         public int Count
         {
-            get { return DBSchemaStoredProcedureParameterDefinitionList.Count; }
+            get { return dbSchemaConstraintDefinitionList.Count; }
         }
 
         /// <summary>
@@ -147,11 +148,11 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns><c>true</c> if item cannot be found then, <c>false</c> otherwise.</returns>
-        public bool Remove(DBSchemaStoredProcedureParameterDefinition item)
+        public bool Remove(DBSchemaConstraintDefinition item)
         {
-            return DBSchemaStoredProcedureParameterDefinitionList.Remove(item);
+            return dbSchemaConstraintDefinitionList.Remove(item);
         }
 
-        #endregion ICollection<DBSchemaStoredProcedureParameterDefinition> Members
+        #endregion ICollection<DBSchemaConstraintDefinition> Members
     }
 }

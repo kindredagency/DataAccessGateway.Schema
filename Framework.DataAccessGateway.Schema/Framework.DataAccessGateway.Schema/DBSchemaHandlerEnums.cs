@@ -1,4 +1,4 @@
-﻿namespace Framework.DataAccessGateway.Schema.Enum
+﻿namespace Framework.DataAccessGateway.Schema
 {
     /// <summary>
     ///     Alter table schema operations
