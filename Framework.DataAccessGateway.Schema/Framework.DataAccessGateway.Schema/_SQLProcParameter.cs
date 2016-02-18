@@ -1,4 +1,4 @@
-﻿namespace Framework.DataAccessGateway.Schema.DataStructure
+﻿namespace Framework.DataAccessGateway.Schema
 {
     /// <summary>
     /// Class _SQLProcParameter.
