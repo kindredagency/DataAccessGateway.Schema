@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Framework.DataAccessGateway.Schema.DataStructure;
 
 namespace Framework.DataAccessGateway.Schema
 {

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
-using Framework.DataAccessGateway.Schema.Collection;
 
-namespace Framework.DataAccessGateway.Schema.DataStructure
+namespace Framework.DataAccessGateway.Schema
 {
     /// <summary>
     /// Class DBSchemaDBDefinition.

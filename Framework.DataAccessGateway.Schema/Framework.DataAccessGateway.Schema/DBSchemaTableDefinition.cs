@@ -1,7 +1,6 @@
 ﻿using System.Linq;
-using Framework.DataAccessGateway.Schema.Collection;
 
-namespace Framework.DataAccessGateway.Schema.DataStructure
+namespace Framework.DataAccessGateway.Schema
 {
     /// <summary>
     ///     Summary description for DBSchemaTableDefinition

@@ -2,11 +2,7 @@
 using System.Data;
 using System.Data.Sql;
 using System.Linq;
-using Framework.DataAccessGateway.Schema.Interface;
-using Framework.DataAccessGateway.Schema.DataStructure;
 using Framework.DataAccessGateway.Core;
-using Framework.DataAccessGateway.Schema.Exception;
-using Framework.DataAccessGateway.Schema.Collection;
 
 namespace Framework.DataAccessGateway.Schema
 {

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Framework.DataAccessGateway.Schema.Collection;
-using Framework.DataAccessGateway.Schema.DataStructure;
-using Framework.DataAccessGateway.Schema.Enum;
 
 namespace Framework.DataAccessGateway.Schema
 {

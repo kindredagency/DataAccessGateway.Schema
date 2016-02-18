@@ -1,7 +1,6 @@
 ﻿using Framework.DataAccessGateway.Core;
-using Framework.DataAccessGateway.Schema.Collection;
 
-namespace Framework.DataAccessGateway.Schema.DataStructure
+namespace Framework.DataAccessGateway.Schema
 {
     /// <summary>
     ///     Stored procedure definition
