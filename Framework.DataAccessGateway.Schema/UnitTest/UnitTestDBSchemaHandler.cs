@@ -14,18 +14,28 @@ namespace UnitTest
             {
                 return ConfigurationManager.ConnectionStrings["DBConnection"].ConnectionString;
             }
-        }      
+        }
+
+        [TestMethod]
+        public void Properties()
+        {
+            IDBSchemaHandler dbSchemaHandler = new DBSchemaHandler(ConnectionString, DBHandlerType.DbHandlerMSSQL);
+
+            Assert.AreNotEqual(dbSchemaHandler.ConnectionString, null);
+            Assert.AreNotEqual(dbSchemaHandler.DataBaseName, null);
+            Assert.AreNotEqual(dbSchemaHandler.ServerName, null);
+        }   
 
         [TestMethod]
         public void GetDB()
         {            
             IDBSchemaHandler dbSchemaHandler = new DBSchemaHandler(ConnectionString, DBHandlerType.DbHandlerMSSQL);
 
-            var db = dbSchemaHandler.GetDataBaseDefinition();
+            var db = dbSchemaHandler.GetDataBaseDefinition();          
 
-            int procCount = db.Procs.Count;
-            int tableCount = db.Tables.Count;
-            int triggerCount = db.Triggers.Count;           
+            Assert.AreNotEqual(db.Procs.Count, 0);
+            Assert.AreNotEqual(db.Tables.Count, 0);
+            Assert.AreNotEqual(db.Triggers.Count, 0);
         }
 
         [TestMethod]
