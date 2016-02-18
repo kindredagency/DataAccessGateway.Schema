@@ -119,7 +119,6 @@ namespace Framework.DataAccessGateway.Schema.Collection
         #endregion IList<DBSchemaTableColumnDefinition> Members
 
         #region ICollection<DBSchemaTableColumnDefinition> Members
-
         /// <summary>
         /// Adds the specified item.
         /// </summary>
@@ -141,7 +140,7 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// Determines whether [contains] [the specified item].
         /// </summary>
         /// <param name="item">The item.</param>
-        /// <returns>System.Boolean.</returns>
+        /// <returns><c>true</c> if [contains] [the specified item]; otherwise, <c>false</c>.</returns>
         public bool Contains(DBSchemaTableColumnDefinition item)
         {
             foreach (var y in columnDefinitionList)
@@ -208,7 +207,7 @@ namespace Framework.DataAccessGateway.Schema.Collection
         }
 
         /// <summary>
-        /// Gets the count.
+        /// Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1" />.
         /// </summary>
         /// <value>The count.</value>
         public int Count
@@ -217,9 +216,9 @@ namespace Framework.DataAccessGateway.Schema.Collection
         }
 
         /// <summary>
-        /// Gets the is read only.
+        /// Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1" /> is read-only.
         /// </summary>
-        /// <value>The is read only.</value>
+        /// <value><c>true</c> if this instance is read only; otherwise, <c>false</c>.</value>
         public bool IsReadOnly
         {
             get { return false; }
@@ -229,7 +228,7 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// Removes the specified item.
         /// </summary>
         /// <param name="item">The item.</param>
-        /// <returns>System.Boolean.</returns>
+        /// <returns><c>true</c> if item cannot be found then, <c>false</c> otherwise.</returns>
         public bool Remove(DBSchemaTableColumnDefinition item)
         {
             return columnDefinitionList.Remove(item);

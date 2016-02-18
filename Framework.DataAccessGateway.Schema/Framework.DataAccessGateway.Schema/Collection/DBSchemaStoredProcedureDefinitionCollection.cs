@@ -179,7 +179,7 @@ namespace Framework.DataAccessGateway.Schema.Collection
         /// Removes the specified item.
         /// </summary>
         /// <param name="item">The item.</param>
-        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+        /// <returns><c>true</c> if item cannot be found then, <c>false</c> otherwise.</returns>
         public bool Remove(DBSchemaStoredProcedureDefinition item)
         {
             return procedures.Remove(item);

@@ -19,7 +19,7 @@ namespace Framework.DataAccessGateway.Schema.DataStructure
         private int? dataFileGrowth = 10;
         private bool isPercentDataFileGrowth = true;
 
-        // Logfile variables
+        // Log file variables
 
         private string logFilePath;
         private int? logFileGrowth = 10;
@@ -75,7 +75,7 @@ namespace Framework.DataAccessGateway.Schema.DataStructure
             dbSchemaDBInstanceCopy.logFilePath = logFilePath;
             dbSchemaDBInstanceCopy.LogFileSize = LogFileSize;
 
-            // Copy intternal table definitions
+            // Copy internal table definitions
             foreach (var dbSchemaTableDefinition in tables)
             {
                 dbSchemaDBInstanceCopy.tables.Add(dbSchemaTableDefinition.Copy());
