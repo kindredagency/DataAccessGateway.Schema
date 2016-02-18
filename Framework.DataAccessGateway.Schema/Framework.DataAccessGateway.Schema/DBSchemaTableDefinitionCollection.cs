@@ -7,14 +7,8 @@ namespace Framework.DataAccessGateway.Schema
     /// Class DBSchemaTableDefinitionCollection.
     /// </summary>
     public class DBSchemaTableDefinitionCollection : IList<DBSchemaTableDefinition>
-    {
-        #region Private Variables
-
-        private readonly List<DBSchemaTableDefinition> tables = new List<DBSchemaTableDefinition>();
-
-        #endregion Private Variables
-
-        #region IEnumerable<DBSchemaTableDefinition> Members
+    {     
+        private readonly List<DBSchemaTableDefinition> tables = new List<DBSchemaTableDefinition>();      
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
@@ -23,11 +17,7 @@ namespace Framework.DataAccessGateway.Schema
         public IEnumerator<DBSchemaTableDefinition> GetEnumerator()
         {
             return tables.GetEnumerator();
-        }
-
-        #endregion IEnumerable<DBSchemaTableDefinition> Members
-
-        #region IEnumerable Members
+        }     
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
@@ -37,10 +27,6 @@ namespace Framework.DataAccessGateway.Schema
         {
             return tables.GetEnumerator();
         }
-
-        #endregion IEnumerable Members
-
-        #region IList<DBSchemaTableDefinition> Members
 
         /// <summary>
         /// Indexes the of.
@@ -93,7 +79,7 @@ namespace Framework.DataAccessGateway.Schema
             {
                 foreach (var dbSchemaTableDefinition in tables)
                 {
-                    if (dbSchemaTableDefinition.TableName == name)
+                    if (dbSchemaTableDefinition.Name == name)
                     {
                         return dbSchemaTableDefinition;
                     }
@@ -106,18 +92,14 @@ namespace Framework.DataAccessGateway.Schema
                 DBSchemaTableDefinition tempDbSchemaTableDefinition = null;
                 foreach (var dbSchemaTableDefinition in tables)
                 {
-                    if (dbSchemaTableDefinition.TableName == name)
+                    if (dbSchemaTableDefinition.Name == name)
                     {
                         tempDbSchemaTableDefinition = dbSchemaTableDefinition;
                     }
                 }
                 tempDbSchemaTableDefinition = value;
             }
-        }
-
-        #endregion IList<DBSchemaTableDefinition> Members
-
-        #region ICollection<DBSchemaTableDefinition> Members
+        }     
 
         /// <summary>
         /// Adds the specified item.
@@ -184,6 +166,5 @@ namespace Framework.DataAccessGateway.Schema
             return tables.Remove(item);
         }
 
-        #endregion ICollection<DBSchemaTableDefinition> Members
     }
 }

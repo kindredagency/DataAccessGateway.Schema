@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Sql;
+﻿using System.Data;
 using System.Linq;
 using Framework.DataAccessGateway.Core;
 
@@ -568,12 +565,12 @@ namespace Framework.DataAccessGateway.Schema
 	                               TRIGGER_OWNER = USER_NAME(SO.uid),
 	                               TABLE_NAME = OBJECT_NAME(SO.parent_obj),
                                    TRIGGER_DEFINITION = (select object_definition(object_id) from sys.triggers where name = SO.name),
-	                               IS_UPDATE = OBJECTPROPERTY( SO.id, 'ExecIsUpdateTrigger'),
-                                   IS_DELETE = OBJECTPROPERTY( SO.id, 'ExecIsDeleteTrigger'),
-                                   IS_INSERT = OBJECTPROPERTY( SO.id, 'ExecIsInsertTrigger'),
-	                               IS_AFTER = OBJECTPROPERTY( SO.id, 'ExecIsAfterTrigger'),
-                                   IS_INSTEAD_OF = OBJECTPROPERTY( SO.id, 'ExecIsInsteadOfTrigger'),
-	                               TRStatus = CASE OBJECTPROPERTY(SO.id, 'ExecIsTriggerDisabled') WHEN 1 THEN 'Disabled' ELSE 'Enabled' END
+	                               IS_UPDATE = CAST( OBJECTPROPERTY( SO.id, 'ExecIsUpdateTrigger') as bit),
+                                   IS_DELETE = CAST( OBJECTPROPERTY( SO.id, 'ExecIsDeleteTrigger') as bit),
+                                   IS_INSERT = CAST( OBJECTPROPERTY( SO.id, 'ExecIsInsertTrigger') as bit),
+	                               IS_AFTER =  CAST( OBJECTPROPERTY( SO.id, 'ExecIsAfterTrigger') as bit),
+                                   IS_INSTEAD_OF = CAST( OBJECTPROPERTY( SO.id, 'ExecIsInsteadOfTrigger') as bit),
+	                               TR_STATUS = CASE OBJECTPROPERTY(SO.id, 'ExecIsTriggerDisabled') WHEN 1 THEN 'Disabled' ELSE 'Enabled' END
                             FROM Sysobjects SO
                             WHERE type = 'TR'";
 

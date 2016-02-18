@@ -47,13 +47,13 @@
   <ItemGroup>
     <Compile Include="DBSchemaConstraintDefinitionCollection.cs" />
     <Compile Include="DBSchemaStoredProcedureDefinitionCollection.cs" />
+    <Compile Include="DBSchemaStoredProcedureParameterDefinition.cs" />
     <Compile Include="DBSchemaStoredProcedureParameterDefinitionCollection.cs" />
     <Compile Include="DBSchemaTableColumnDefinitionCollection.cs" />
     <Compile Include="DBSchemaTableDefinitionCollection.cs" />
     <Compile Include="DBSchemaTriggerDefinitionCollection.cs" />
     <Compile Include="DBSchemaConstraintDefinition.cs" />
     <Compile Include="DBSchemaDataBaseDefinition.cs" />
-    <Compile Include="DBSchemaServerDefinition.cs" />
     <Compile Include="DBSchemaStoredProcedureDefinition.cs" />
     <Compile Include="DBSchemaTableColumnDefinition.cs" />
     <Compile Include="DBSchemaTableDefinition.cs" />

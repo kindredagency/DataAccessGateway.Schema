@@ -8,13 +8,7 @@ namespace Framework.DataAccessGateway.Schema
     /// </summary>
     public class DBSchemaTriggerDefinitionCollection : IList<DBSchemaTriggerDefinition>
     {
-        #region Private Variables
-
         private readonly List<DBSchemaTriggerDefinition> triggers = new List<DBSchemaTriggerDefinition>();
-
-        #endregion Private Variables
-
-        #region IEnumerable<DBSchemaTriggerDefinition> Members
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
@@ -24,10 +18,7 @@ namespace Framework.DataAccessGateway.Schema
         {
             return triggers.GetEnumerator();
         }
-
-        #endregion IEnumerable<DBSchemaTriggerDefinition> Members
-
-        #region IEnumerable Members
+       
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
@@ -37,11 +28,7 @@ namespace Framework.DataAccessGateway.Schema
         {
             return triggers.GetEnumerator();
         }
-
-        #endregion IEnumerable Members
-
-        #region IList<DBSchemaTriggerDefinition> Members
-
+     
         /// <summary>
         /// Indexes the of.
         /// </summary>
@@ -116,10 +103,6 @@ namespace Framework.DataAccessGateway.Schema
             }
         }
 
-        #endregion IList<DBSchemaTriggerDefinition> Members
-
-        #region ICollection<DBSchemaTriggerDefinition> Members
-
         /// <summary>
         /// Adds the specified item.
         /// </summary>
@@ -184,7 +167,6 @@ namespace Framework.DataAccessGateway.Schema
         {
             return triggers.Remove(item);
         }
-
-        #endregion ICollection<DBSchemaTriggerDefinition> Members
+       
     }
 }

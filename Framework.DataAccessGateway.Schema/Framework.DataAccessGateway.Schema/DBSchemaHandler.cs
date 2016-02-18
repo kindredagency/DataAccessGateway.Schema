@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Framework.DataAccessGateway.Core;
+﻿using Framework.DataAccessGateway.Core;
 
 namespace Framework.DataAccessGateway.Schema
 {

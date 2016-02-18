@@ -7,14 +7,8 @@ namespace Framework.DataAccessGateway.Schema
     /// Class DBSchemaStoredProcedureParameterDefinitionCollection.
     /// </summary>
     public class DBSchemaStoredProcedureParameterDefinitionCollection : IList<DBSchemaStoredProcedureParameterDefinition>
-    {
-        #region Private Variables
-
-        private readonly List<DBSchemaStoredProcedureParameterDefinition> DBSchemaStoredProcedureParameterDefinitionList = new List<DBSchemaStoredProcedureParameterDefinition>();
-
-        #endregion Private Variables
-
-        #region IEnumerable<DBSchemaStoredProcedureParameterDefinition> Members
+    {       
+        private readonly List<DBSchemaStoredProcedureParameterDefinition> DBSchemaStoredProcedureParameterDefinitionList = new List<DBSchemaStoredProcedureParameterDefinition>();       
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
@@ -23,11 +17,7 @@ namespace Framework.DataAccessGateway.Schema
         public IEnumerator<DBSchemaStoredProcedureParameterDefinition> GetEnumerator()
         {
             return DBSchemaStoredProcedureParameterDefinitionList.GetEnumerator();
-        }
-
-        #endregion IEnumerable<DBSchemaStoredProcedureParameterDefinition> Members
-
-        #region IEnumerable Members
+        }       
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
@@ -36,11 +26,7 @@ namespace Framework.DataAccessGateway.Schema
         IEnumerator IEnumerable.GetEnumerator()
         {
             return DBSchemaStoredProcedureParameterDefinitionList.GetEnumerator();
-        }
-
-        #endregion IEnumerable Members
-
-        #region IList<DBSchemaStoredProcedureParameterDefinition> Members
+        }       
 
         /// <summary>
         /// Indexes the of.
@@ -80,11 +66,7 @@ namespace Framework.DataAccessGateway.Schema
         {
             get { return DBSchemaStoredProcedureParameterDefinitionList[index]; }
             set { DBSchemaStoredProcedureParameterDefinitionList[index] = value; }
-        }
-
-        #endregion IList<DBSchemaStoredProcedureParameterDefinition> Members
-
-        #region ICollection<DBSchemaStoredProcedureParameterDefinition> Members
+        }       
 
         /// <summary>
         /// Adds the specified item.
@@ -149,8 +131,6 @@ namespace Framework.DataAccessGateway.Schema
         public bool Remove(DBSchemaStoredProcedureParameterDefinition item)
         {
             return DBSchemaStoredProcedureParameterDefinitionList.Remove(item);
-        }
-
-        #endregion ICollection<DBSchemaStoredProcedureParameterDefinition> Members
+        }                
     }
 }

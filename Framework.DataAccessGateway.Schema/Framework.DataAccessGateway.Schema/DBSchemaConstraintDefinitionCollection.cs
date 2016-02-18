@@ -7,15 +7,8 @@ namespace Framework.DataAccessGateway.Schema
     /// Class DBSchemaConstraintDefinitionCollection.
     /// </summary>
     public class DBSchemaConstraintDefinitionCollection : IList<DBSchemaConstraintDefinition>
-    {
-        #region Private Variables
-
-        private readonly List<DBSchemaConstraintDefinition> dbSchemaConstraintDefinitionList =
-            new List<DBSchemaConstraintDefinition>();
-
-        #endregion Private Variables
-
-        #region IEnumerable<DBSchemaConstraintDefinition> Members
+    {   
+        private readonly List<DBSchemaConstraintDefinition> dbSchemaConstraintDefinitionList = new List<DBSchemaConstraintDefinition>();    
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
@@ -24,11 +17,7 @@ namespace Framework.DataAccessGateway.Schema
         public IEnumerator<DBSchemaConstraintDefinition> GetEnumerator()
         {
             return dbSchemaConstraintDefinitionList.GetEnumerator();
-        }
-
-        #endregion IEnumerable<DBSchemaConstraintDefinition> Members
-
-        #region IEnumerable Members
+        }        
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
@@ -37,11 +26,7 @@ namespace Framework.DataAccessGateway.Schema
         IEnumerator IEnumerable.GetEnumerator()
         {
             return dbSchemaConstraintDefinitionList.GetEnumerator();
-        }
-
-        #endregion IEnumerable Members
-
-        #region IList<DBSchemaConstraintDefinition> Members
+        }     
 
         /// <summary>
         /// Indexes the of.
@@ -81,11 +66,7 @@ namespace Framework.DataAccessGateway.Schema
         {
             get { return dbSchemaConstraintDefinitionList[index]; }
             set { dbSchemaConstraintDefinitionList[index] = value; }
-        }
-
-        #endregion IList<DBSchemaConstraintDefinition> Members
-
-        #region ICollection<DBSchemaConstraintDefinition> Members
+        }       
 
         /// <summary>
         /// Adds the specified item.
@@ -150,8 +131,6 @@ namespace Framework.DataAccessGateway.Schema
         public bool Remove(DBSchemaConstraintDefinition item)
         {
             return dbSchemaConstraintDefinitionList.Remove(item);
-        }
-
-        #endregion ICollection<DBSchemaConstraintDefinition> Members
+        }        
     }
 }

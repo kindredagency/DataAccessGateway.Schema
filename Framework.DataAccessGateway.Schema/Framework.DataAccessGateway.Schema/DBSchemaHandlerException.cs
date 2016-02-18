@@ -6,10 +6,8 @@ namespace Framework.DataAccessGateway.Schema
     ///     Summary description for DBHandlerException.
     /// </summary>
     [Serializable]
-    internal sealed class DBSchemaHandlerException : System.Exception
+    internal sealed class DBSchemaHandlerException : Exception
     {
-        #region Constructor Definitions
-
         /// <summary>
         ///     Exception Handler for DBHandler
         /// </summary>
@@ -31,11 +29,9 @@ namespace Framework.DataAccessGateway.Schema
         /// </summary>
         /// <param name="message"></param>
         /// <param name="innerException"></param>
-        public DBSchemaHandlerException(string message, System.Exception innerException)
+        public DBSchemaHandlerException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
-
-        #endregion Constructor Definitions
     }
 }

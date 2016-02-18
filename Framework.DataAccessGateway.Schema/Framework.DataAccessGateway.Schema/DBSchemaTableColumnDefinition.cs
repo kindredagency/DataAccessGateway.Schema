@@ -7,48 +7,6 @@ namespace Framework.DataAccessGateway.Schema
     /// </summary>
     public class DBSchemaTableColumnDefinition
     {
-        #region Public Methods
-
-        /// <summary>
-        ///     Makes a copy of the instance
-        /// </summary>
-        /// <returns>DBSchemaTableColumnDefinition</returns>
-        public DBSchemaTableColumnDefinition Copy()
-        {
-            var dbSchemaTableColumnDefinitionCopy = new DBSchemaTableColumnDefinition(ColumnName);
-
-            dbSchemaTableColumnDefinitionCopy.DataType = DataType;
-
-            foreach (var dbSchemaConstraintDefinition in dbSchemaConstraintDefinitionList)
-            {
-                dbSchemaTableColumnDefinitionCopy.dbSchemaConstraintDefinitionList.Add(
-                    dbSchemaConstraintDefinition.Copy());
-            }
-
-            dbSchemaTableColumnDefinitionCopy.DefaultValue = DefaultValue;
-            dbSchemaTableColumnDefinitionCopy.IdentityIncrement = IdentityIncrement;
-            dbSchemaTableColumnDefinitionCopy.IdentitySeed = IdentitySeed;
-            dbSchemaTableColumnDefinitionCopy.isIdentity = isIdentity;
-            dbSchemaTableColumnDefinitionCopy.isNullable = isNullable;
-            dbSchemaTableColumnDefinitionCopy.Length = Length;
-
-            return dbSchemaTableColumnDefinitionCopy;
-        }
-
-        #endregion Public Methods
-
-        #region Private Varialbles
-
-        private DBSchemaConstraintDefinitionCollection dbSchemaConstraintDefinitionList =
-            new DBSchemaConstraintDefinitionCollection();
-
-        private bool isNullable = true;
-        private bool isIdentity;
-
-        #endregion Private Varialbles
-
-        #region Public Properties
-
         /// <summary>
         ///     Column Name
         /// </summary>
@@ -74,8 +32,7 @@ namespace Framework.DataAccessGateway.Schema
         /// </summary>
         public DBSchemaConstraintDefinitionCollection DBSchemaConstraintDefinitionList
         {
-            get { return dbSchemaConstraintDefinitionList; }
-            set { dbSchemaConstraintDefinitionList = value; }
+            get; set;
         }
 
         /// <summary>
@@ -84,8 +41,7 @@ namespace Framework.DataAccessGateway.Schema
         /// <value><c>true</c> if this instance is nullable; otherwise, <c>false</c>.</value>
         public bool IsNullable
         {
-            get { return isNullable; }
-            set { isNullable = value; }
+            get; set;
         }
 
         /// <summary>
@@ -94,15 +50,7 @@ namespace Framework.DataAccessGateway.Schema
         /// <value><c>true</c> if this instance is identity; otherwise, <c>false</c>.</value>
         public bool IsIdentity
         {
-            get { return isIdentity; }
-            set
-            {
-                isIdentity = value;
-
-                //Default to 1,1 values
-                IdentitySeed = 1;
-                IdentityIncrement = 1;
-            }
+            get; set;
         }
 
         /// <summary>
@@ -116,10 +64,7 @@ namespace Framework.DataAccessGateway.Schema
         /// </summary>
         /// <value>The identity increment.</value>
         public int? IdentityIncrement { get; set; }
-
-        #endregion Public Properties
-
-        #region Constructor
+    
 
         /// <summary>
         ///     Constructor definition
@@ -132,6 +77,7 @@ namespace Framework.DataAccessGateway.Schema
             Length = null;
             DefaultValue = null;
             ColumnName = columnName;
+            DBSchemaConstraintDefinitionList = new DBSchemaConstraintDefinitionCollection();
         }
 
         /// <summary>
@@ -147,6 +93,7 @@ namespace Framework.DataAccessGateway.Schema
             DefaultValue = null;
             ColumnName = columnName;
             DataType = dataType;
+            DBSchemaConstraintDefinitionList = new DBSchemaConstraintDefinitionCollection();
         }
 
         /// <summary>
@@ -157,8 +104,7 @@ namespace Framework.DataAccessGateway.Schema
         /// <param name="length"></param>
         /// <param name="defaultValue"></param>
         /// <param name="isNullable"></param>
-        public DBSchemaTableColumnDefinition(string columnName, DBHandlerDataType dataType, int length,
-            string defaultValue, bool isNullable)
+        public DBSchemaTableColumnDefinition(string columnName, DBHandlerDataType dataType, int length,  string defaultValue, bool isNullable)
         {
             IdentityIncrement = null;
             IdentitySeed = null;
@@ -166,7 +112,8 @@ namespace Framework.DataAccessGateway.Schema
             DataType = dataType;
             DefaultValue = defaultValue;
             Length = length;
-            this.isNullable = isNullable;
+            IsNullable = isNullable;
+            DBSchemaConstraintDefinitionList = new DBSchemaConstraintDefinitionCollection();
         }
 
         /// <summary>
@@ -181,21 +128,44 @@ namespace Framework.DataAccessGateway.Schema
         /// <param name="isIdentity"></param>
         /// <param name="identitySeed"></param>
         /// <param name="identityIncrement"></param>
-        public DBSchemaTableColumnDefinition(string columnName, DBHandlerDataType dataType, int length,
-            DBSchemaConstraintDefinition dbSchemaConstraintDefinitionList, string defaultValue, bool isNullable,
-            bool isIdentity, int? identitySeed, int? identityIncrement)
+        public DBSchemaTableColumnDefinition(string columnName, DBHandlerDataType dataType, int length,  DBSchemaConstraintDefinition dbSchemaConstraintDefinitionList, string defaultValue, bool isNullable,  bool isIdentity, int? identitySeed, int? identityIncrement)
         {
             ColumnName = columnName;
             DataType = dataType;
             DefaultValue = defaultValue;
-            Length = length;
-            this.dbSchemaConstraintDefinitionList.Add(dbSchemaConstraintDefinitionList);
-            this.isNullable = isNullable;
-            this.isIdentity = isIdentity;
+            Length = length;            
+            IsNullable = isNullable;
+            IsIdentity = isIdentity;
             IdentitySeed = identitySeed;
             IdentityIncrement = identityIncrement;
-        }
+            DBSchemaConstraintDefinitionList = new DBSchemaConstraintDefinitionCollection();
+            DBSchemaConstraintDefinitionList.Add(dbSchemaConstraintDefinitionList);
+        }       
 
-        #endregion Constructor
+
+        /// <summary>
+        ///     Makes a copy of the instance
+        /// </summary>
+        /// <returns>DBSchemaTableColumnDefinition</returns>
+        public DBSchemaTableColumnDefinition Copy()
+        {
+            var dbSchemaTableColumnDefinitionCopy = new DBSchemaTableColumnDefinition(ColumnName);
+
+            dbSchemaTableColumnDefinitionCopy.DataType = DataType;
+
+            foreach (var dbSchemaConstraintDefinition in DBSchemaConstraintDefinitionList)
+            {
+                dbSchemaTableColumnDefinitionCopy.DBSchemaConstraintDefinitionList.Add(dbSchemaConstraintDefinition.Copy());
+            }
+
+            dbSchemaTableColumnDefinitionCopy.DefaultValue = DefaultValue;
+            dbSchemaTableColumnDefinitionCopy.IdentityIncrement = IdentityIncrement;
+            dbSchemaTableColumnDefinitionCopy.IdentitySeed = IdentitySeed;
+            dbSchemaTableColumnDefinitionCopy.IsIdentity = IsIdentity;
+            dbSchemaTableColumnDefinitionCopy.IsNullable = IsNullable;
+            dbSchemaTableColumnDefinitionCopy.Length = Length;
+
+            return dbSchemaTableColumnDefinitionCopy;
+        }
     }
 }

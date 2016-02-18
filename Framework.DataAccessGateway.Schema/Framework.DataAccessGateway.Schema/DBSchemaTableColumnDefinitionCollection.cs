@@ -8,13 +8,7 @@ namespace Framework.DataAccessGateway.Schema
     /// </summary>
     public class DBSchemaTableColumnDefinitionCollection : IList<DBSchemaTableColumnDefinition>
     {
-        #region Private Variables
-
-        private readonly List<DBSchemaTableColumnDefinition> columnDefinitionList = new List<DBSchemaTableColumnDefinition>();
-
-        #endregion Private Variables
-
-        #region IEnumerable<DBSchemaTableColumnDefinition> Members
+        private readonly List<DBSchemaTableColumnDefinition> columnDefinitionList = new List<DBSchemaTableColumnDefinition>();      
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
@@ -23,11 +17,7 @@ namespace Framework.DataAccessGateway.Schema
         public IEnumerator<DBSchemaTableColumnDefinition> GetEnumerator()
         {
             return columnDefinitionList.GetEnumerator();
-        }
-
-        #endregion IEnumerable<DBSchemaTableColumnDefinition> Members
-
-        #region IEnumerable Members
+        }       
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
@@ -36,11 +26,7 @@ namespace Framework.DataAccessGateway.Schema
         IEnumerator IEnumerable.GetEnumerator()
         {
             return columnDefinitionList.GetEnumerator();
-        }
-
-        #endregion IEnumerable Members
-
-        #region IList<DBSchemaTableColumnDefinition> Members
+        }      
 
         /// <summary>
         /// Indexes the of.
@@ -114,10 +100,7 @@ namespace Framework.DataAccessGateway.Schema
                 tempDbSchemaTableDefinition = value;
             }
         }
-
-        #endregion IList<DBSchemaTableColumnDefinition> Members
-
-        #region ICollection<DBSchemaTableColumnDefinition> Members
+       
         /// <summary>
         /// Adds the specified item.
         /// </summary>
@@ -232,7 +215,6 @@ namespace Framework.DataAccessGateway.Schema
         {
             return columnDefinitionList.Remove(item);
         }
-
-        #endregion ICollection<DBSchemaTableColumnDefinition> Members
+        
     }
 }

@@ -6,6 +6,7 @@
     internal class _SQLTrigger
     {
         public string TRIGGER_NAME { get; set; }
+
         public string TRIGGER_OWNER { get; set; }
 
         public string TABLE_NAME { get; set; }

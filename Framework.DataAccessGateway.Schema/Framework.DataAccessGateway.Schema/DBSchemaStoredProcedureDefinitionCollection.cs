@@ -7,14 +7,8 @@ namespace Framework.DataAccessGateway.Schema
     /// Class DBSchemaStoredProcedureDefinitionCollection.
     /// </summary>
     public class DBSchemaStoredProcedureDefinitionCollection : IList<DBSchemaStoredProcedureDefinition>
-    {
-        #region Private Variables
-
-        private readonly List<DBSchemaStoredProcedureDefinition> procedures = new List<DBSchemaStoredProcedureDefinition>();
-
-        #endregion Private Variables
-
-        #region IEnumerable<DBSchemaStoredProcedureDefinition> Members
+    {    
+        private readonly List<DBSchemaStoredProcedureDefinition> procedures = new List<DBSchemaStoredProcedureDefinition>();     
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
@@ -23,11 +17,7 @@ namespace Framework.DataAccessGateway.Schema
         public IEnumerator<DBSchemaStoredProcedureDefinition> GetEnumerator()
         {
             return procedures.GetEnumerator();
-        }
-
-        #endregion IEnumerable<DBSchemaStoredProcedureDefinition> Members
-
-        #region IEnumerable Members
+        }     
 
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
@@ -36,11 +26,7 @@ namespace Framework.DataAccessGateway.Schema
         IEnumerator IEnumerable.GetEnumerator()
         {
             return procedures.GetEnumerator();
-        }
-
-        #endregion IEnumerable Members
-
-        #region IList<DBSchemaStoredProcedureDefinition> Members
+        }        
 
         /// <summary>
         /// Indexes the of.
@@ -113,11 +99,7 @@ namespace Framework.DataAccessGateway.Schema
                 }
                 tempDBSchemaStoredProcedureDefinition = value;
             }
-        }
-
-        #endregion IList<DBSchemaStoredProcedureDefinition> Members
-
-        #region ICollection<DBSchemaStoredProcedureDefinition> Members
+        }       
 
         /// <summary>
         /// Adds the specified item.
@@ -182,8 +164,6 @@ namespace Framework.DataAccessGateway.Schema
         public bool Remove(DBSchemaStoredProcedureDefinition item)
         {
             return procedures.Remove(item);
-        }
-
-        #endregion ICollection<DBSchemaStoredProcedureDefinition> Members
+        }        
     }
 }
