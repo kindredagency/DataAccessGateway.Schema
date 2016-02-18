@@ -52,7 +52,7 @@
     <Compile Include="DBSchemaTableDefinitionCollection.cs" />
     <Compile Include="DBSchemaTriggerDefinitionCollection.cs" />
     <Compile Include="DBSchemaConstraintDefinition.cs" />
-    <Compile Include="DBSchemaDBDefinition.cs" />
+    <Compile Include="DBSchemaDataBaseDefinition.cs" />
     <Compile Include="DBSchemaServerDefinition.cs" />
     <Compile Include="DBSchemaStoredProcedureDefinition.cs" />
     <Compile Include="DBSchemaTableColumnDefinition.cs" />

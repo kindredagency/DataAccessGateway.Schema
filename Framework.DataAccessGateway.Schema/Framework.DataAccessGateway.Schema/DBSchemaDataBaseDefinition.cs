@@ -6,7 +6,7 @@ namespace Framework.DataAccessGateway.Schema
     /// <summary>
     /// Class DBSchemaDBDefinition.
     /// </summary>
-    public class DBSchemaDBDefinition
+    public class DBSchemaDataBaseDefinition
     {
         #region private variables
 
@@ -35,10 +35,10 @@ namespace Framework.DataAccessGateway.Schema
         #region methods
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DBSchemaDBDefinition"/> class.
+        /// Initializes a new instance of the <see cref="DBSchemaDataBaseDefinition"/> class.
         /// </summary>
         /// <param name="databaseName">Name of the database.</param>
-        public DBSchemaDBDefinition(string databaseName)
+        public DBSchemaDataBaseDefinition(string databaseName)
         {
             LogFileMaxSize = null;
             LogFileSize = null;
@@ -54,9 +54,9 @@ namespace Framework.DataAccessGateway.Schema
         /// Copies this instance.
         /// </summary>
         /// <returns>DBSchemaDBDefinition.</returns>
-        public DBSchemaDBDefinition Copy()
+        public DBSchemaDataBaseDefinition Copy()
         {
-            var dbSchemaDBInstanceCopy = new DBSchemaDBDefinition(databaseName);
+            var dbSchemaDBInstanceCopy = new DBSchemaDataBaseDefinition(databaseName);
 
             //Set attributes
             dbSchemaDBInstanceCopy.DatabaseSize = DatabaseSize;

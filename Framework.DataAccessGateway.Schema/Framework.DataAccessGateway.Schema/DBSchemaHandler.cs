@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Framework.DataAccessGateway.Core;
 
 namespace Framework.DataAccessGateway.Schema
@@ -8,215 +9,139 @@ namespace Framework.DataAccessGateway.Schema
     /// </summary>
     public class DBSchemaHandler : IDBSchemaHandler
     {
-        #region Private Variables
-
         private readonly IDBSchemaHandler independentDBHandler;
-
-        #endregion Private Variables
-
-        #region Constructor
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DBSchemaHandler"/> class.
         /// </summary>
+        /// <param name="connectionString">The connection string.</param>
         /// <param name="dbHandlerType">Type of the database handler.</param>
-        public DBSchemaHandler(DBHandlerType dbHandlerType)
+        public DBSchemaHandler(string connectionString, DBHandlerType dbHandlerType)
         {
-            //Include More Types as support becomes more available.
-
             switch (dbHandlerType)
             {
-                case DBHandlerType.DbHandlerMSSQL:
-                    independentDBHandler = new DBSchemaHandlerMSSQL();
+                case DBHandlerType.DbHandlerMSSQL: independentDBHandler = new DBSchemaHandlerMSSQL(connectionString);
                     break;
             }
         }
 
-        #endregion Constructor
-
-        #region Public Properties
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DBSchemaHandler"/> class.
+        /// </summary>
+        /// <param name="dbSchemaHandler">The database schema handler.</param>
+        public DBSchemaHandler(IDBSchemaHandler dbSchemaHandler)
+        {
+            independentDBHandler = dbSchemaHandler;
+        }
 
         /// <summary>
-        ///     Read Only: ConnectionString for the database.
+        /// Gets the connection string.
         /// </summary>
         /// <value>The connection string.</value>
         public string ConnectionString
         {
-            get { return independentDBHandler.ConnectionString; }
-        }
-
-        #endregion Public Properties
-
-        #region IDBSchemaHandler Members
-
-        /// <summary>
-        ///     Returns a list DB Servers Connected to the network.
-        ///     May not always return all servers on the network
-        /// </summary>
-        /// <returns>Generic string list of DBSchemaServerInstance objects</returns>
-        public List<DBSchemaServerDefinition> GetDBServerListing()
-        {
-            return independentDBHandler.GetDBServerListing();
+            get
+            {
+                return independentDBHandler.ConnectionString;
+            }
         }
 
         /// <summary>
-        ///     Returns a database in the given server
+        /// Gets the name of the server.
         /// </summary>
-        /// <param name="connectionString">DB Connection string of the database</param>
-        /// <returns>DBSchemaDBInstance</returns>
-        public DBSchemaDBDefinition GetDB(string connectionString)
+        /// <value>The name of the server.</value>
+        public string ServerName
         {
-            return independentDBHandler.GetDB(connectionString);
+            get
+            {
+                return independentDBHandler.ServerName;
+            }
         }
 
         /// <summary>
-        ///     Gets the database.
+        /// Gets the name of the data base.
         /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <returns>DBSchemaDBDefinition.</returns>
-        public DBSchemaDBDefinition GetDB(string dbServerName, string dbUserID, string dbPassword, string dbName)
+        /// <value>The name of the data base.</value>
+        public string DataBaseName
         {
-            return independentDBHandler.GetDB(dbServerName, dbUserID, dbPassword, dbName);
+            get
+            {
+                return independentDBHandler.DataBaseName;
+            }
         }
 
         /// <summary>
-        ///     Gets the database listing.
-        /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
-        /// <returns>List{DBSchemaDBDefinition}.</returns>
-        public List<DBSchemaDBDefinition> GetDBListing(string dbServerName, string dbUserID, string dbPassword)
-        {
-            return independentDBHandler.GetDBListing(dbServerName, dbUserID, dbPassword);
-        }
-
-        /// <summary>
-        ///     Gets the table definition.
-        /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <param name="tableName">Name of the table.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
-        /// <returns>DBSchemaTableDefinition.</returns>
-        public DBSchemaTableDefinition GetTableDefinition(string dbServerName, string dbName, string tableName,
-            string dbUserID, string dbPassword)
-        {
-            return independentDBHandler.GetTableDefinition(dbServerName, dbName, tableName, dbUserID, dbPassword);
-        }
-
-        /// <summary>
-        ///     Gets the table definition listing.
-        /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
-        /// <returns>DBSchemaTableDefinitionCollection.</returns>
-        public DBSchemaTableDefinitionCollection GetTableDefinitionListing(string dbServerName, string dbName,
-            string dbUserID, string dbPassword)
-        {
-            return independentDBHandler.GetTableDefinitionListing(dbServerName, dbName, dbUserID, dbPassword);
-        }
-
-        /// <summary>
-        ///     Gets the proc definition.
-        /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <param name="procName">Name of the proc.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
-        /// <returns>DBSchemaStoredProcedureDefinition.</returns>
-        public DBSchemaStoredProcedureDefinition GetProcDefinition(string dbServerName, string dbName, string procName,
-            string dbUserID, string dbPassword)
-        {
-            return independentDBHandler.GetProcDefinition(dbServerName, dbName, procName, dbUserID, dbPassword);
-        }
-
-        /// <summary>
-        ///     Gets the proc definition listing.
-        /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
-        /// <returns>DBSchemaStoredProcedureDefinitionCollection.</returns>
-        public DBSchemaStoredProcedureDefinitionCollection GetProcDefinitionListing(string dbServerName, string dbName,
-            string dbUserID, string dbPassword)
-        {
-            return independentDBHandler.GetProcDefinitionListing(dbServerName, dbName, dbUserID, dbPassword);
-        }
-
-        /// <summary>
-        ///     Gets the trigger definition.
-        /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <param name="triggerName">Name of the trigger.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
-        /// <returns>DBSchemaTriggerDefinition.</returns>
-        public DBSchemaTriggerDefinition GetTriggerDefinition(string dbServerName, string dbName, string triggerName,
-            string dbUserID, string dbPassword)
-        {
-            return independentDBHandler.GetTriggerDefinition(dbServerName, dbName, triggerName, dbUserID, dbPassword);
-        }
-
-        /// <summary>
-        ///     Gets the trigger definition listing.
-        /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
-        /// <returns>DBSchemaTriggerDefinitionCollection.</returns>
-        public DBSchemaTriggerDefinitionCollection GetTriggerDefinitionListing(string dbServerName, string dbName,
-            string dbUserID, string dbPassword)
-        {
-            return independentDBHandler.GetTriggerDefinitionListing(dbServerName, dbName, dbUserID, dbPassword);
-        }        
-
-        /// <summary>
-        ///     Builds the connection string.
-        /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
-        /// <returns>System.String.</returns>
-        public string BuildConnectionString(string dbServerName, string dbName, string dbUserID, string dbPassword)
-        {
-            return independentDBHandler.BuildConnectionString(dbServerName, dbName, dbUserID, dbPassword);
-        }
-
-        /// <summary>
-        ///     Breaks the connection string.
-        /// </summary>
-        /// <param name="connectionString">The connection string.</param>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
-        public void BreakConnectionString(string connectionString, out string dbServerName, out string dbName,
-            out string dbUserID, out string dbPassword)
-        {
-            independentDBHandler.BreakConnectionString(connectionString, out dbServerName, out dbName, out dbUserID,
-                out dbPassword);
-        }
-
-        /// <summary>
-        ///     Dispose unmanaged resources
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
         {
             independentDBHandler.Dispose();
         }
 
-        #endregion IDBSchemaHandler Members
+        /// <summary>
+        /// Gets the data base definition.
+        /// </summary>
+        /// <returns>DBSchemaDataBaseDefinition.</returns>
+        public DBSchemaDataBaseDefinition GetDataBaseDefinition()
+        {
+            return independentDBHandler.GetDataBaseDefinition();
+        }
+
+        /// <summary>
+        /// Gets the stored procedure definition.
+        /// </summary>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
+        /// <returns>DBSchemaStoredProcedureDefinition.</returns>
+        public DBSchemaStoredProcedureDefinition GetStoredProcedureDefinition(string storedProcedureName)
+        {
+            return independentDBHandler.GetStoredProcedureDefinition(storedProcedureName);
+        }
+
+        /// <summary>
+        /// Gets the stored procedure definition listing.
+        /// </summary>
+        /// <returns>DBSchemaStoredProcedureDefinitionCollection.</returns>
+        public DBSchemaStoredProcedureDefinitionCollection GetStoredProcedureDefinitionListing()
+        {
+            return independentDBHandler.GetStoredProcedureDefinitionListing();
+        }
+
+        /// <summary>
+        /// Gets the table definition.
+        /// </summary>
+        /// <param name="tableName">Name of the table.</param>
+        /// <returns>DBSchemaTableDefinition.</returns>
+        public DBSchemaTableDefinition GetTableDefinition(string tableName)
+        {
+            return independentDBHandler.GetTableDefinition(tableName);
+        }
+
+        /// <summary>
+        /// Gets the table definition listing.
+        /// </summary>
+        /// <returns>DBSchemaTableDefinitionCollection.</returns>
+        public DBSchemaTableDefinitionCollection GetTableDefinitionListing()
+        {
+            return independentDBHandler.GetTableDefinitionListing();
+        }
+
+        /// <summary>
+        /// Gets the trigger definition.
+        /// </summary>
+        /// <param name="triggerName">Name of the trigger.</param>
+        /// <returns>DBSchemaTriggerDefinition.</returns>
+        public DBSchemaTriggerDefinition GetTriggerDefinition(string triggerName)
+        {
+            return independentDBHandler.GetTriggerDefinition(triggerName);
+        }
+
+        /// <summary>
+        /// Gets the trigger definition listing.
+        /// </summary>
+        /// <returns>DBSchemaTriggerDefinitionCollection.</returns>
+        public DBSchemaTriggerDefinitionCollection GetTriggerDefinitionListing()
+        {
+            return independentDBHandler.GetTriggerDefinitionListing();
+        }
     }
 }

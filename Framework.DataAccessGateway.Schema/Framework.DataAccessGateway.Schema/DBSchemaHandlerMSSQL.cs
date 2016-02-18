@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Sql;
 using System.Linq;
@@ -8,71 +9,56 @@ namespace Framework.DataAccessGateway.Schema
 {
     internal class DBSchemaHandlerMSSQL : IDBSchemaHandler
     {
-        #region Properties
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DBSchemaHandlerMSSQL"/> class.
+        /// </summary>
+        /// <param name="connectionString">The connection string.</param>
+        public DBSchemaHandlerMSSQL(string connectionString)
+        {
+            ConnectionString = connectionString;           
+
+            BreakConnectionString(connectionString);
+        }
 
         /// <summary>
-        /// Read Only: ConnectionString for the database.
+        /// Gets the connection string.
         /// </summary>
         /// <value>The connection string.</value>
         public string ConnectionString { get; private set; }
 
-        #endregion Properties
-
-        #region IDBSchemaHandler Members
-
         /// <summary>
-        /// Gets the database server listing.
+        /// Gets the name of the server.
         /// </summary>
-        /// <returns>List{DBSchemaServerDefinition}.</returns>
-        public List<DBSchemaServerDefinition> GetDBServerListing()
+        /// <value>The name of the server.</value>
+        public string ServerName
         {
-            var sqlDataSourceEnumerator = SqlDataSourceEnumerator.Instance;
-            var dtDataSources = sqlDataSourceEnumerator.GetDataSources();
-
-            var dbSchemaServerInstanceList = new List<DBSchemaServerDefinition>();
-
-            foreach (DataRow aRow in dtDataSources.Rows)
-            {
-                var dbSchemaServerInstance = new DBSchemaServerDefinition(aRow["ServerName"].ToString(),
-                    aRow["InstanceName"].ToString(), aRow["IsClustered"].ToString(), aRow["Version"].ToString());
-                dbSchemaServerInstanceList.Add(dbSchemaServerInstance);
-            }
-
-            return dbSchemaServerInstanceList;
+            get; private set;
         }
 
         /// <summary>
-        /// Gets the database.
+        /// Gets the name of the data base.
         /// </summary>
-        /// <param name="connectionString">The connection string.</param>
-        /// <returns>DBSchemaDBDefinition.</returns>
-        public DBSchemaDBDefinition GetDB(string connectionString)
+        /// <value>The name of the data base.</value>
+        public string DataBaseName
         {
-            string dbServerName;
-            string dbName;
-            string dbUserID;
-            string dbPassword;
-
-            BreakConnectionString(connectionString, out dbServerName, out dbName, out dbUserID, out dbPassword);
-
-            return GetDB(dbServerName, dbUserID, dbPassword, dbName);
+            get; private set;
         }
 
         /// <summary>
-        /// Gets the database.
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <returns>DBSchemaDBDefinition.</returns>
-        /// <exception cref="DBSchemaHandlerException">Unable to establish connection to specified database</exception>
-        public DBSchemaDBDefinition GetDB(string dbServerName, string dbUserID, string dbPassword, string dbName)
+        public void Dispose()
         {
-            // Default connection to master db of SQL Server
-            var sqlConnectionString = BuildConnectionString(dbServerName, dbName, dbUserID, dbPassword);
+        }
 
-            // Exec Query to retrive all DB Information information.
+        /// <summary>
+        /// Gets the data base definition.
+        /// </summary>
+        /// <returns>DBSchemaDataBaseDefinition.</returns>
+        /// <exception cref="Framework.DataAccessGateway.Schema.DBSchemaHandlerException">Unable to establish connection to specified database</exception>
+        public DBSchemaDataBaseDefinition GetDataBaseDefinition()
+        {
+            // Exec Query to retrieve all DB Information information.
             var sql = @" Select
 
                             DATABASE_NAME			= SDB.[name],
@@ -107,15 +93,15 @@ namespace Framework.DataAccessGateway.Schema
 
             try
             {
-                var dbHandler = new DBHandler(sqlConnectionString, DBHandlerType.DbHandlerMSSQL);
+                var dbHandler = new DBHandler(ConnectionString, DBHandlerType.DbHandlerMSSQL);
 
                 var dbHandlerParameters = new DBHandlerParameter[1];
                 dbHandlerParameters[0] = new DBHandlerParameter("DatabaseName", DBHandlerDataType.VarChar);
-                dbHandlerParameters[0].Value = dbName;
+                dbHandlerParameters[0].Value = DataBaseName;
 
                 var sqlDBSchema = dbHandler.ExecuteQuery<_SQLDB>(sql, dbHandlerParameters, CommandType.Text).SingleOrDefault();
 
-                DBSchemaDBDefinition dbSchemaDBInstance = new DBSchemaDBDefinition(dbName);
+                DBSchemaDataBaseDefinition dbSchemaDBInstance = new DBSchemaDataBaseDefinition(DataBaseName);
 
                 if (sqlDBSchema != null)
                 {
@@ -142,11 +128,11 @@ namespace Framework.DataAccessGateway.Schema
 
                 if (dbSchemaDBInstance != null)
                 {
-                    dbSchemaDBInstance.Tables = GetTableDefinitionListing(dbServerName, dbSchemaDBInstance.DatabaseName, dbUserID, dbPassword);
+                    dbSchemaDBInstance.Tables = GetTableDefinitionListing();
 
-                    dbSchemaDBInstance.Procs = GetProcDefinitionListing(dbServerName, dbSchemaDBInstance.DatabaseName, dbUserID, dbPassword);
+                    dbSchemaDBInstance.Procs = GetStoredProcedureDefinitionListing();
 
-                    dbSchemaDBInstance.Triggers = GetTriggerDefinitionListing(dbServerName, dbSchemaDBInstance.DatabaseName, dbUserID, dbPassword);
+                    dbSchemaDBInstance.Triggers = GetTriggerDefinitionListing();
                 }
 
                 dbHandler.Dispose();
@@ -160,74 +146,13 @@ namespace Framework.DataAccessGateway.Schema
         }
 
         /// <summary>
-        /// Gets the database listing.
-        /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
-        /// <returns>List{DBSchemaDBDefinition}.</returns>
-        /// <exception cref="DBSchemaHandlerException">Unable to establish connection to specified database</exception>
-        public List<DBSchemaDBDefinition> GetDBListing(string dbServerName, string dbUserID, string dbPassword)
-        {
-            var sqlConnectionString = BuildConnectionString(dbServerName, "MASTER", dbUserID, dbPassword);
-
-            var sql = @" Select
-
-                            DatabaseName			= SDB.[name],
-                            DatabaseSize			= convert(int,
-                                                            case -- more than 2TB(maxint) worth of pages (by 8K each) can not fit an int...
-                                                            when convert(bigint, sum(SMF.size)) >= 268435456
-                                                            then null
-                                                            else sum(SMF.size)*8 -- Convert from 8192 byte pages to Kb
-                                                            end),
-                            DataFilePath		= (select physical_name from sys.master_files where database_id = SDB.dbid AND type_desc = 'ROWS'),
-                            DataFileSize			= (select [size] from sys.master_files where database_id = SDB.dbid AND type_desc = 'ROWS'),
-                            DataFileMaxSize			= (select max_size from sys.master_files where database_id = SDB.dbid AND type_desc = 'ROWS'),
-                            DataFileGrowth			= (select growth from sys.master_files where database_id = SDB.dbid AND type_desc = 'ROWS'),
-                            IsPercentDataFileGrowth		= (select is_percent_growth from sys.master_files where database_id = SDB.dbid AND type_desc = 'ROWS'),
-                            LogFilePath		= (select physical_name from sys.master_files where database_id = SDB.dbid AND type_desc = 'LOG'),
-                            LogFileSize			= (select [size] from sys.master_files where database_id = SDB.dbid AND type_desc = 'LOG'),
-                            LogFileMaxSize			= (select max_size from sys.master_files where database_id = SDB.dbid AND type_desc = 'LOG'),
-                            LogFileGrowth			= (select growth from sys.master_files where database_id = SDB.dbid AND type_desc = 'LOG'),
-                            IsPercentLogFileGrowth		= (select is_percent_growth from sys.master_files where database_id = SDB.dbid AND type_desc = 'LOG'),
-                            DateCreated				=  SDB.crdate
-
-                            from
-                            master..sysdatabases SDB,
-                            sys.master_files SMF
-                            Where
-                            SDB.dbid = SMF.database_id
-                            AND SMF.state = 0 -- ONLINE
-                            AND has_dbaccess(db_name(SMF.database_id)) = 1 -- Only look at databases to which we have access
-
-                            Group by SDB.[name],SDB.dbid,SDB.crdate";
-
-            try
-            {
-                var dbHandler = new DBHandler(sqlConnectionString, DBHandlerType.DbHandlerMSSQL);
-
-                return dbHandler.ExecuteQuery<DBSchemaDBDefinition>(sql, CommandType.Text).ToList();
-            }
-            catch (System.Exception ex)
-            {
-                throw new DBSchemaHandlerException("Unable to establish connection to specified database", ex);
-            }
-        }
-
-        /// <summary>
         /// Gets the table definition.
         /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
         /// <param name="tableName">Name of the table.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
         /// <returns>DBSchemaTableDefinition.</returns>
-        /// <exception cref="DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
-        public DBSchemaTableDefinition GetTableDefinition(string dbServerName, string dbName, string tableName, string dbUserID, string dbPassword)
+        /// <exception cref="Framework.DataAccessGateway.Schema.DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
+        public DBSchemaTableDefinition GetTableDefinition(string tableName)
         {
-            var sqlConnectionString = BuildConnectionString(dbServerName, dbName, dbUserID, dbPassword);
-
             //QUERY 1 : Retrieve detailed table definition Information from selected DB
             //QUERY 2 : Retrieve all constraints based on a column / table from the selected DB
             var sql1 = @"    Select
@@ -329,7 +254,7 @@ namespace Framework.DataAccessGateway.Schema
 
             try
             {
-                var dbHandler = new DBHandler(sqlConnectionString, DBHandlerType.DbHandlerMSSQL);
+                var dbHandler = new DBHandler(ConnectionString, DBHandlerType.DbHandlerMSSQL);
 
                 var dbHandlerParameters = new DBHandlerParameter[1];
                 dbHandlerParameters[0] = new DBHandlerParameter("tableName", DBHandlerDataType.VarChar);
@@ -379,22 +304,14 @@ namespace Framework.DataAccessGateway.Schema
                 throw new DBSchemaHandlerException("Unable to establish connection or retrieve information from specified database", ex);
             }
         }
-
+        
         /// <summary>
         /// Gets the table definition listing.
         /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
         /// <returns>DBSchemaTableDefinitionCollection.</returns>
-        /// <exception cref="DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
-        public DBSchemaTableDefinitionCollection GetTableDefinitionListing(string dbServerName, string dbName,
-            string dbUserID, string dbPassword)
+        /// <exception cref="Framework.DataAccessGateway.Schema.DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
+        public DBSchemaTableDefinitionCollection GetTableDefinitionListing()
         {
-            //Connection string to DB.
-            var sqlConnectionString = BuildConnectionString(dbServerName, dbName, dbUserID, dbPassword);
-
             //QUERY 1 : Retrieve all table names from selected DB
             //QUERY 2 : Retrieve detailed table definition Information from selected DB
             //QUERY 3 : Retrieve all constraints based on a column / table from the selected DB
@@ -495,7 +412,7 @@ namespace Framework.DataAccessGateway.Schema
 
             try
             {
-                var dbHandler = new DBHandler(sqlConnectionString, DBHandlerType.DbHandlerMSSQL);
+                var dbHandler = new DBHandler(ConnectionString, DBHandlerType.DbHandlerMSSQL);
 
                 var sqlTables = dbHandler.ExecuteQuery<_SQLTable>(sql, CommandType.Text);
                 var sqlTableDefinitions = dbHandler.ExecuteQuery<_SQLTableDefinition>(sql1, CommandType.Text);
@@ -552,34 +469,22 @@ namespace Framework.DataAccessGateway.Schema
         }
 
         /// <summary>
-        /// Gets the proc definition.
+        /// Gets the stored procedure definition.
         /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <param name="procName">Name of the proc.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
+        /// <param name="storedProcedureName">Name of the stored procedure.</param>
         /// <returns>DBSchemaStoredProcedureDefinition.</returns>
-        public DBSchemaStoredProcedureDefinition GetProcDefinition(string dbServerName, string dbName, string procName,
-            string dbUserID, string dbPassword)
+        public DBSchemaStoredProcedureDefinition GetStoredProcedureDefinition(string storedProcedureName)
         {
-            return GetProcDefinitionListing(dbServerName, dbName, dbUserID, dbPassword)[procName];
+            return GetStoredProcedureDefinitionListing()[storedProcedureName];
         }
 
         /// <summary>
-        /// Gets the proc definition listing.
+        /// Gets the stored procedure definition listing.
         /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
         /// <returns>DBSchemaStoredProcedureDefinitionCollection.</returns>
-        /// <exception cref="DBSchemaHandlerException">Unable to establish connection or retrive information from specified database</exception>
-        public DBSchemaStoredProcedureDefinitionCollection GetProcDefinitionListing(string dbServerName, string dbName,
-            string dbUserID, string dbPassword)
-        {
-            //Connection string to DB.
-            var sqlConnectionString = BuildConnectionString(dbServerName, dbName, dbUserID, dbPassword);
+        /// <exception cref="Framework.DataAccessGateway.Schema.DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
+        public DBSchemaStoredProcedureDefinitionCollection GetStoredProcedureDefinitionListing()
+        {   
 
             var sql = @"SELECT
                             PROC_NAME = XXX.[name],
@@ -607,7 +512,7 @@ namespace Framework.DataAccessGateway.Schema
             try
             {
                 // Create DBHandler connection to database.
-                var dbHandler = new DBHandler(sqlConnectionString, DBHandlerType.DbHandlerMSSQL);
+                var dbHandler = new DBHandler(ConnectionString, DBHandlerType.DbHandlerMSSQL);
 
                 var procDefinitions = dbHandler.ExecuteQuery<_SQLProc>(sql, CommandType.Text);
                 var procParameterDefinitions = dbHandler.ExecuteQuery<_SQLProcParameter>(sql1, CommandType.Text);
@@ -645,33 +550,20 @@ namespace Framework.DataAccessGateway.Schema
         /// <summary>
         /// Gets the trigger definition.
         /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
         /// <param name="triggerName">Name of the trigger.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
         /// <returns>DBSchemaTriggerDefinition.</returns>
-        public DBSchemaTriggerDefinition GetTriggerDefinition(string dbServerName, string dbName, string triggerName,
-            string dbUserID, string dbPassword)
+        public DBSchemaTriggerDefinition GetTriggerDefinition(string triggerName)
         {
-            return GetTriggerDefinitionListing(dbServerName, dbName, dbUserID, dbPassword)[triggerName];
+            return GetTriggerDefinitionListing()[triggerName];
         }
 
         /// <summary>
         /// Gets the trigger definition listing.
         /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
         /// <returns>DBSchemaTriggerDefinitionCollection.</returns>
-        /// <exception cref="DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
-        public DBSchemaTriggerDefinitionCollection GetTriggerDefinitionListing(string dbServerName, string dbName,
-            string dbUserID, string dbPassword)
-        {
-            //Connection string to DB.
-            var sqlConnectionString = BuildConnectionString(dbServerName, dbName, dbUserID, dbPassword);
-
+        /// <exception cref="Framework.DataAccessGateway.Schema.DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
+        public DBSchemaTriggerDefinitionCollection GetTriggerDefinitionListing()
+        {   
             var sql = @"SELECT TRIGGER_NAME = SO.Name,
 	                               TRIGGER_OWNER = USER_NAME(SO.uid),
 	                               TABLE_NAME = OBJECT_NAME(SO.parent_obj),
@@ -689,7 +581,7 @@ namespace Framework.DataAccessGateway.Schema
 
             try
             {
-                var dbHandler = new DBHandler(sqlConnectionString, DBHandlerType.DbHandlerMSSQL);
+                var dbHandler = new DBHandler(ConnectionString, DBHandlerType.DbHandlerMSSQL);
 
                 var trSQLDefinitions = dbHandler.ExecuteQuery<_SQLTrigger>(sql, CommandType.Text);
 
@@ -717,69 +609,33 @@ namespace Framework.DataAccessGateway.Schema
 
             return dbSchemaTriggerDefinitionCollection;
         }
-       
-
-        /// <summary>
-        /// Builds the connection string.
-        /// </summary>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
-        /// <returns>System.String.</returns>
-        public string BuildConnectionString(string dbServerName, string dbName, string dbUserID, string dbPassword)
-        {
-            //Connection string to DB.
-            var sqlConnectionString = "Data Source={0};Initial Catalog={1};User Id={2};Password={3};";
-
-            // Assign variables.
-            sqlConnectionString = sqlConnectionString.Replace("{0}", dbServerName);
-            sqlConnectionString = sqlConnectionString.Replace("{1}", dbName);
-            sqlConnectionString = sqlConnectionString.Replace("{2}", dbUserID);
-            sqlConnectionString = sqlConnectionString.Replace("{3}", dbPassword);
-
-            // set current connection string as output connotion string.
-            ConnectionString = sqlConnectionString;
-
-            return sqlConnectionString;
-        }
 
         /// <summary>
         /// Breaks the connection string.
         /// </summary>
-        /// <param name="connectionString">The connection string.</param>
-        /// <param name="dbServerName">Name of the database server.</param>
-        /// <param name="dbName">Name of the database.</param>
-        /// <param name="dbUserID">The database user identifier.</param>
-        /// <param name="dbPassword">The database password.</param>
-        public void BreakConnectionString(string connectionString, out string dbServerName, out string dbName,
-            out string dbUserID, out string dbPassword)
+        /// <param name="ConnectionString">The connection string.</param>
+        private void BreakConnectionString(string ConnectionString)
         {
-            var parameters = connectionString.Split(';');
-
-            dbServerName = null;
-            dbName = null;
-            dbUserID = null;
-            dbPassword = null;
+            var parameters = ConnectionString.Split(';');
 
             foreach (var parameter in parameters)
             {
                 switch (parameter.Split('=')[0].ToLower())
                 {
                     case "data source":
-                        dbServerName = parameter.Split('=')[1];
+                        ServerName = parameter.Split('=')[1];
                         break;
 
                     case "initial catalog":
-                        dbName = parameter.Split('=')[1];
+                        DataBaseName = parameter.Split('=')[1];
                         break;
 
                     case "user id":
-                        dbUserID = parameter.Split('=')[1];
+                        var userId = parameter.Split('=')[1];
                         break;
 
                     case "password":
-                        dbPassword = parameter.Split('=')[1];
+                        var password = parameter.Split('=')[1];
                         break;
 
                     default:
@@ -787,15 +643,6 @@ namespace Framework.DataAccessGateway.Schema
                 }
             }
         }
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-        }
-
-        #endregion IDBSchemaHandler Members
-       
+               
     }
 }
