@@ -51,6 +51,8 @@
     <Compile Include="DBSchemaStoredProcedureParameterDefinitionCollection.cs" />
     <Compile Include="DBSchemaTableColumnDefinitionCollection.cs" />
     <Compile Include="DBSchemaTableDefinitionCollection.cs" />
+    <Compile Include="DBSchemaViewDefinitionCollection.cs" />
+    <Compile Include="DBSchemaViewDefinition.cs" />
     <Compile Include="DBSchemaTriggerDefinitionCollection.cs" />
     <Compile Include="DBSchemaConstraintDefinition.cs" />
     <Compile Include="DBSchemaDataBaseDefinition.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="_SQLActiveConnection.cs" />
     <Compile Include="_SQLConstraint.cs" />
     <Compile Include="_SQLDB.cs" />
+    <Compile Include="_SQLView.cs" />
     <Compile Include="_SQLProc.cs" />
     <Compile Include="_SQLProcParameter.cs" />
     <Compile Include="_SQLTable.cs" />

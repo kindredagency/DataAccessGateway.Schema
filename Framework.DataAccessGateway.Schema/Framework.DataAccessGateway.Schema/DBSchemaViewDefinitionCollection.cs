@@ -3,23 +3,24 @@ using System.Collections.Generic;
 
 namespace Framework.DataAccessGateway.Schema
 {
+
     /// <summary>
-    /// Class DBSchemaTriggerDefinitionCollection.
+    /// Class DBSchemaViewDefinitionCollection.
     /// </summary>
-    public class DBSchemaTriggerDefinitionCollection : IList<DBSchemaTriggerDefinition>
+    public class DBSchemaViewDefinitionCollection : IList<DBSchemaViewDefinition>
     {
         /// <summary>
-        /// The triggers
+        /// The views
         /// </summary>
-        private readonly List<DBSchemaTriggerDefinition> triggers = new List<DBSchemaTriggerDefinition>();
+        private readonly List<DBSchemaViewDefinition> views = new List<DBSchemaViewDefinition>();
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-        public IEnumerator<DBSchemaTriggerDefinition> GetEnumerator()
+        public IEnumerator<DBSchemaViewDefinition> GetEnumerator()
         {
-            return triggers.GetEnumerator();
+            return views.GetEnumerator();
         }
 
 
@@ -29,7 +30,7 @@ namespace Framework.DataAccessGateway.Schema
         /// <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return triggers.GetEnumerator();
+            return views.GetEnumerator();
         }
 
         /// <summary>
@@ -37,9 +38,9 @@ namespace Framework.DataAccessGateway.Schema
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns>System.Int32.</returns>
-        public int IndexOf(DBSchemaTriggerDefinition item)
+        public int IndexOf(DBSchemaViewDefinition item)
         {
-            return triggers.IndexOf(item);
+            return views.IndexOf(item);
         }
 
         /// <summary>
@@ -47,9 +48,9 @@ namespace Framework.DataAccessGateway.Schema
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="item">The item.</param>
-        public void Insert(int index, DBSchemaTriggerDefinition item)
+        public void Insert(int index, DBSchemaViewDefinition item)
         {
-            triggers.Insert(index, item);
+            views.Insert(index, item);
         }
 
         /// <summary>
@@ -58,34 +59,34 @@ namespace Framework.DataAccessGateway.Schema
         /// <param name="index">The index.</param>
         public void RemoveAt(int index)
         {
-            triggers.RemoveAt(index);
+            views.RemoveAt(index);
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="DBSchemaTriggerDefinition" /> at the specified index.
+        /// Gets or sets the <see cref="DBSchemaViewDefinition" /> at the specified index.
         /// </summary>
         /// <param name="index">The index.</param>
-        /// <returns>DBSchemaTriggerDefinition.</returns>
-        public DBSchemaTriggerDefinition this[int index]
+        /// <returns>DBSchemaViewDefinition.</returns>
+        public DBSchemaViewDefinition this[int index]
         {
-            get { return triggers[index]; }
-            set { triggers[index] = value; }
+            get { return views[index]; }
+            set { views[index] = value; }
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="DBSchemaTriggerDefinition" /> with the specified name.
+        /// Gets or sets the <see cref="DBSchemaViewDefinition" /> with the specified name.
         /// </summary>
         /// <param name="name">The name.</param>
-        /// <returns>DBSchemaTriggerDefinition.</returns>
-        public DBSchemaTriggerDefinition this[string name]
+        /// <returns>DBSchemaViewDefinition.</returns>
+        public DBSchemaViewDefinition this[string name]
         {
             get
             {
-                foreach (var dbSchemaTriggersDefinition in triggers)
+                foreach (var dbSchemaViewDefinition in views)
                 {
-                    if (dbSchemaTriggersDefinition.TriggerName == name)
+                    if (dbSchemaViewDefinition.Name == name)
                     {
-                        return dbSchemaTriggersDefinition;
+                        return dbSchemaViewDefinition;
                     }
                 }
 
@@ -93,16 +94,16 @@ namespace Framework.DataAccessGateway.Schema
             }
             set
             {
-                DBSchemaTriggerDefinition tempDbSchemaTriggerDefinition = null;
-                foreach (var dbSchemaTriggerDefinition in triggers)
+                DBSchemaViewDefinition tempDbSchemaViewDefinition = null;
+                foreach (var dbSchemaTriggerDefinition in views)
                 {
-                    if (dbSchemaTriggerDefinition.TriggerName == name)
+                    if (dbSchemaTriggerDefinition.Name == name)
                     {
-                        tempDbSchemaTriggerDefinition = dbSchemaTriggerDefinition;
+                        tempDbSchemaViewDefinition = dbSchemaTriggerDefinition;
                     }
                 }
 
-                tempDbSchemaTriggerDefinition = value;
+                tempDbSchemaViewDefinition = value;
             }
         }
 
@@ -110,9 +111,9 @@ namespace Framework.DataAccessGateway.Schema
         /// Adds the specified item.
         /// </summary>
         /// <param name="item">The item.</param>
-        public void Add(DBSchemaTriggerDefinition item)
+        public void Add(DBSchemaViewDefinition item)
         {
-            triggers.Add(item);
+            views.Add(item);
         }
 
         /// <summary>
@@ -120,7 +121,7 @@ namespace Framework.DataAccessGateway.Schema
         /// </summary>
         public void Clear()
         {
-            triggers.Clear();
+            views.Clear();
         }
 
         /// <summary>
@@ -128,9 +129,9 @@ namespace Framework.DataAccessGateway.Schema
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns><c>true</c> if [contains] [the specified item]; otherwise, <c>false</c>.</returns>
-        public bool Contains(DBSchemaTriggerDefinition item)
+        public bool Contains(DBSchemaViewDefinition item)
         {
-            return triggers.Contains(item);
+            return views.Contains(item);
         }
 
         /// <summary>
@@ -138,9 +139,9 @@ namespace Framework.DataAccessGateway.Schema
         /// </summary>
         /// <param name="array">The array.</param>
         /// <param name="arrayIndex">Index of the array.</param>
-        public void CopyTo(DBSchemaTriggerDefinition[] array, int arrayIndex)
+        public void CopyTo(DBSchemaViewDefinition[] array, int arrayIndex)
         {
-            triggers.CopyTo(array, arrayIndex);
+            views.CopyTo(array, arrayIndex);
         }
 
         /// <summary>
@@ -149,7 +150,7 @@ namespace Framework.DataAccessGateway.Schema
         /// <value>The count.</value>
         public int Count
         {
-            get { return triggers.Count; }
+            get { return views.Count; }
         }
 
         /// <summary>
@@ -166,9 +167,9 @@ namespace Framework.DataAccessGateway.Schema
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns><c>true</c> if item cannot be found then, <c>false</c> otherwise.</returns>
-        public bool Remove(DBSchemaTriggerDefinition item)
+        public bool Remove(DBSchemaViewDefinition item)
         {
-            return triggers.Remove(item);
+            return views.Remove(item);
         }
        
     }

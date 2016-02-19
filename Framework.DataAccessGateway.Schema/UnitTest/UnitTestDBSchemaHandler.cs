@@ -99,5 +99,28 @@ namespace UnitTest
 
             Assert.AreNotEqual(triggers.Count, 0);
         }
+
+        [TestMethod]
+        public void GetView()
+        {
+            IDBSchemaHandler dbSchemaHandler = new DBSchemaHandler(ConnectionString, DBHandlerType.DbHandlerMSSQL);
+
+            var view = dbSchemaHandler.GetView("SampleView");
+
+            if (view != null)
+                Assert.AreEqual(view.Name, "SampleView");
+        }
+
+        [TestMethod]
+        public void GetViewListing()
+        {
+            IDBSchemaHandler dbSchemaHandler = new DBSchemaHandler(ConnectionString, DBHandlerType.DbHandlerMSSQL);
+
+            var views = dbSchemaHandler.GetViewListing();
+
+            Assert.AreNotEqual(views.Count, 0);
+        }
+
+
     }
 }

@@ -73,6 +73,19 @@ namespace Framework.DataAccessGateway.Schema
         /// Gets the trigger definition listing.
         /// </summary>
         /// <returns>DBSchemaTriggerDefinitionCollection.</returns>
-        DBSchemaTriggerDefinitionCollection GetTriggerDefinitionListing();   
+        DBSchemaTriggerDefinitionCollection GetTriggerDefinitionListing();
+
+        /// <summary>
+        /// Gets the view.
+        /// </summary>
+        /// <param name="viewName">Name of the view.</param>
+        /// <returns>DBSchemaViewDefinition.</returns>
+        DBSchemaViewDefinition GetView(string viewName);
+
+        /// <summary>
+        /// Gets the view listing.
+        /// </summary>
+        /// <returns>DBSchemaViewDefinitionCollection.</returns>
+        DBSchemaViewDefinitionCollection GetViewListing();
     }
 }

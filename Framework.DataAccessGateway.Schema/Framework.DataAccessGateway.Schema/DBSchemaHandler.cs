@@ -1,4 +1,5 @@
-﻿using Framework.DataAccessGateway.Core;
+﻿using System;
+using Framework.DataAccessGateway.Core;
 
 namespace Framework.DataAccessGateway.Schema
 {
@@ -140,6 +141,25 @@ namespace Framework.DataAccessGateway.Schema
         public DBSchemaTriggerDefinitionCollection GetTriggerDefinitionListing()
         {
             return independentDBHandler.GetTriggerDefinitionListing();
+        }
+
+        /// <summary>
+        /// Gets the view.
+        /// </summary>
+        /// <param name="viewName">Name of the view.</param>
+        /// <returns>DBSchemaViewDefinition.</returns>
+        public DBSchemaViewDefinition GetView(string viewName)
+        {
+            return independentDBHandler.GetView(viewName);
+        }
+
+        /// <summary>
+        /// Gets the view listing.
+        /// </summary>
+        /// <returns>DBSchemaViewDefinitionCollection.</returns>
+        public DBSchemaViewDefinitionCollection GetViewListing()
+        {
+            return independentDBHandler.GetViewListing();
         }
     }
 }

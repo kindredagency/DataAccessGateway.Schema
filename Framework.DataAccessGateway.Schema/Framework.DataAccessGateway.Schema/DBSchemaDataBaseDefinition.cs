@@ -7,8 +7,7 @@ namespace Framework.DataAccessGateway.Schema
     /// Class DBSchemaDBDefinition.
     /// </summary>
     public class DBSchemaDataBaseDefinition
-    {
-        #region private variables
+    {        
 
         private string databaseName;
 
@@ -29,10 +28,6 @@ namespace Framework.DataAccessGateway.Schema
 
         private DBSchemaStoredProcedureDefinitionCollection procs = new DBSchemaStoredProcedureDefinitionCollection();
         private DBSchemaTriggerDefinitionCollection triggers = new DBSchemaTriggerDefinitionCollection();
-
-        #endregion private variables
-
-        #region methods
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DBSchemaDataBaseDefinition"/> class.
@@ -93,11 +88,7 @@ namespace Framework.DataAccessGateway.Schema
             }
 
             return dbSchemaDBInstanceCopy;
-        }
-
-        #endregion methods
-
-        #region properties
+        }     
 
         /// <summary>
         ///     Gets or sets the name of the database.
@@ -258,11 +249,7 @@ namespace Framework.DataAccessGateway.Schema
         {
             get { return triggers; }
             set { triggers = value; }
-        }
-
-        #endregion properties
-
-        #region private methods
+        }        
 
         /// <summary>
         /// Initializes the values.
@@ -292,7 +279,6 @@ namespace Framework.DataAccessGateway.Schema
             LogFileSize = 50;
             LogFileMaxSize = null;
         }
-
-        #endregion private methods
+        
     }
 }

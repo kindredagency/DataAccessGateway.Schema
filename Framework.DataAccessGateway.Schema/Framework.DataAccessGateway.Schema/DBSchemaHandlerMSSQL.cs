@@ -1,13 +1,17 @@
 ﻿using System.Data;
 using System.Linq;
 using Framework.DataAccessGateway.Core;
+using System;
 
 namespace Framework.DataAccessGateway.Schema
 {
+    /// <summary>
+    /// Class DBSchemaHandlerMSSQL.
+    /// </summary>
     internal class DBSchemaHandlerMSSQL : IDBSchemaHandler
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DBSchemaHandlerMSSQL"/> class.
+        /// Initializes a new instance of the <see cref="DBSchemaHandlerMSSQL" /> class.
         /// </summary>
         /// <param name="connectionString">The connection string.</param>
         public DBSchemaHandlerMSSQL(string connectionString)
@@ -52,6 +56,7 @@ namespace Framework.DataAccessGateway.Schema
         /// Gets the data base definition.
         /// </summary>
         /// <returns>DBSchemaDataBaseDefinition.</returns>
+        /// <exception cref="DBSchemaHandlerException">Unable to establish connection to specified database</exception>
         /// <exception cref="Framework.DataAccessGateway.Schema.DBSchemaHandlerException">Unable to establish connection to specified database</exception>
         public DBSchemaDataBaseDefinition GetDataBaseDefinition()
         {
@@ -147,6 +152,7 @@ namespace Framework.DataAccessGateway.Schema
         /// </summary>
         /// <param name="tableName">Name of the table.</param>
         /// <returns>DBSchemaTableDefinition.</returns>
+        /// <exception cref="DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
         /// <exception cref="Framework.DataAccessGateway.Schema.DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
         public DBSchemaTableDefinition GetTableDefinition(string tableName)
         {
@@ -301,11 +307,12 @@ namespace Framework.DataAccessGateway.Schema
                 throw new DBSchemaHandlerException("Unable to establish connection or retrieve information from specified database", ex);
             }
         }
-        
+
         /// <summary>
         /// Gets the table definition listing.
         /// </summary>
         /// <returns>DBSchemaTableDefinitionCollection.</returns>
+        /// <exception cref="DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
         /// <exception cref="Framework.DataAccessGateway.Schema.DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
         public DBSchemaTableDefinitionCollection GetTableDefinitionListing()
         {
@@ -479,6 +486,7 @@ namespace Framework.DataAccessGateway.Schema
         /// Gets the stored procedure definition listing.
         /// </summary>
         /// <returns>DBSchemaStoredProcedureDefinitionCollection.</returns>
+        /// <exception cref="DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
         /// <exception cref="Framework.DataAccessGateway.Schema.DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
         public DBSchemaStoredProcedureDefinitionCollection GetStoredProcedureDefinitionListing()
         {   
@@ -558,6 +566,7 @@ namespace Framework.DataAccessGateway.Schema
         /// Gets the trigger definition listing.
         /// </summary>
         /// <returns>DBSchemaTriggerDefinitionCollection.</returns>
+        /// <exception cref="DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
         /// <exception cref="Framework.DataAccessGateway.Schema.DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
         public DBSchemaTriggerDefinitionCollection GetTriggerDefinitionListing()
         {   
@@ -598,13 +607,67 @@ namespace Framework.DataAccessGateway.Schema
                     dbSchemaTriggerDefinitionCollection.Add(trDefinition);
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 throw new DBSchemaHandlerException(
                     "Unable to establish connection or retrieve information from specified database", ex);
             }
 
             return dbSchemaTriggerDefinitionCollection;
+        }
+
+        /// <summary>
+        /// Gets the view.
+        /// </summary>
+        /// <param name="viewName">Name of the view.</param>
+        /// <returns>DBSchemaViewDefinition.</returns>
+        public DBSchemaViewDefinition GetView(string viewName)
+        {
+            return GetViewListing()[viewName];
+        }
+
+        /// <summary>
+        /// Gets the view listing.
+        /// </summary>
+        /// <returns>DBSchemaViewDefinitionCollection.</returns>
+        /// <exception cref="DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
+        public DBSchemaViewDefinitionCollection GetViewListing()
+        {
+            var sql = @"SELECT
+                        OBJECT_ID = V.OBJECT_ID,
+                        SCHEMA_NAME = SCHEMA_NAME(V.schema_id),
+                        VIEW_NAME = name ,
+                        ISINDEXED = CAST( OBJECTPROPERTYEX(V.OBJECT_ID,'IsIndexed') as bit),
+                        ISINDEXABLE = CAST( OBJECTPROPERTYEX(V.OBJECT_ID,'IsIndexable') as bit),
+                        TEXT = SC.text
+                        FROM sys.views V, syscomments SC
+                        WHERE V.object_id = SC.id";
+
+            var dbSchemaViewDefinitionCollection = new DBSchemaViewDefinitionCollection();
+
+            try
+            {
+                var dbHandler = new DBHandler(ConnectionString, DBHandlerType.DbHandlerMSSQL);
+
+                var viewSQLDefinitions = dbHandler.ExecuteQuery<_SQLView>(sql, CommandType.Text);
+
+                foreach (var viewSQLDefinition in viewSQLDefinitions)
+                {
+                    var viewDefinition = new DBSchemaViewDefinition(viewSQLDefinition.VIEW_NAME);
+
+                    viewDefinition.IsIndexable = viewSQLDefinition.ISINDEXABLE;
+                    viewDefinition.IsIndexed = viewSQLDefinition.ISINDEXED;
+                    viewDefinition.Definition = viewSQLDefinition.TEXT;
+
+                    dbSchemaViewDefinitionCollection.Add(viewDefinition);
+                }
+
+                return dbSchemaViewDefinitionCollection;
+            }
+            catch (Exception ex)
+            {
+                throw new DBSchemaHandlerException("Unable to establish connection or retrieve information from specified database", ex);
+            }
         }
 
         /// <summary>
