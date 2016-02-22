@@ -62,6 +62,7 @@
     <Compile Include="DBSchemaTableDefinition.cs" />
     <Compile Include="DBSchemaTriggerDefinition.cs" />
     <Compile Include="DBUserDefinedTableTypeDefinition.cs" />
+    <Compile Include="DBUserDefinedTableTypeDefinitionColumn.cs" />
     <Compile Include="_SQLActiveConnection.cs" />
     <Compile Include="_SQLConstraint.cs" />
     <Compile Include="_SQLDB.cs" />

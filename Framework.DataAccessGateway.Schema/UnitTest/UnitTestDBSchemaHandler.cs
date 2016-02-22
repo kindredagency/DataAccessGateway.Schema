@@ -132,6 +132,17 @@ namespace UnitTest
         }
 
         [TestMethod]
+        public void GetUserDefinedTableType()
+        {
+            IDBSchemaHandler dbSchemaHandler = new DBSchemaHandler(ConnectionString, DBHandlerType.DbHandlerMSSQL);
+
+            var view = dbSchemaHandler.GetUserDefinedTableType("_Data");
+
+            if (view != null)
+                Assert.AreEqual(view.Name, "_Data");
+        }
+
+        [TestMethod]
         public void GetUserDefinedTableTypes()
         {
             IDBSchemaHandler dbSchemaHandler = new DBSchemaHandler(ConnectionString, DBHandlerType.DbHandlerMSSQL);

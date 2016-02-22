@@ -1,5 +1,4 @@
-﻿using System;
-using Framework.DataAccessGateway.Core;
+﻿using Framework.DataAccessGateway.Core;
 
 namespace Framework.DataAccessGateway.Schema
 {
