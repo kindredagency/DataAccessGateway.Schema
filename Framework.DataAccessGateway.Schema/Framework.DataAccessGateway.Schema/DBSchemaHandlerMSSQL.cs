@@ -690,6 +690,75 @@ namespace Framework.DataAccessGateway.Schema
         }
 
         /// <summary>
+        /// Gets the type of the user defined table.
+        /// </summary>
+        /// <param name="typeName">Name of the type.</param>
+        /// <returns>DBUserDefinedTableTypeDefinition.</returns>
+        public DBUserDefinedTableTypeDefinition GetUserDefinedTableType(string typeName)
+        {
+            return GetUserDefinedTableTypes()[typeName];
+        }
+
+        /// <summary>
+        /// Gets the user defined table types.
+        /// </summary>
+        /// <returns>DBUserDefinedTableTypeCollection.</returns>
+        /// <exception cref="DBSchemaHandlerException">Unable to establish connection or retrieve information from specified database</exception>
+        public DBUserDefinedTableTypeCollection GetUserDefinedTableTypes()
+        {
+            var sql = @"SELECT 
+	                           ID = Type.user_type_id,	  
+	                           TYPE_NAME = TYPE.name,
+                               COLUMN_ID = COL.column_id,
+                               [COLUMN] = COL.name,
+                               DATA_TYPE = ST.name,
+                               IS_NULLABLE = COL.Is_Nullable,    
+                               LENGTH = Cast(COL.max_length as int),
+                               PRECISION = Cast(COL.[precision] as int),
+                               SCALE = Cast(COL.scale as int),
+                               COLLATION = ST.collation
+                        FROM sys.table_types TYPE
+                        JOIN sys.columns     COL
+                            ON TYPE.type_table_object_id = COL.object_id
+                        JOIN sys.systypes AS ST  
+                            ON ST.xtype = COL.system_type_id
+                        where TYPE.is_user_defined = 1 and TYPE.is_table_type = 1
+                        ORDER BY TYPE_NAME, COL.column_id";
+
+
+            try
+            {
+                var dbHandler = new DBHandler(ConnectionString, DBHandlerType.DbHandlerMSSQL);
+
+                var userDefinedTableTypeDefinitions = from c in dbHandler.ExecuteQuery<_SQLUserDefinedTableType>(sql, CommandType.Text)
+                                                      group c by new { c.ID, c.TYPE_NAME }   into g
+                                                      select new DBUserDefinedTableTypeDefinition
+                                                      {
+                                                          Id = g.Key.ID,
+                                                          Name = g.Key.TYPE_NAME,
+                                                          Columns = g.Select(c => new DBUserDefinedTableTypeDefinitionColumn
+                                                          {
+                                                              ColumnId = c.COLUMN_ID,
+                                                              Name = c.COLUMN,
+                                                              DataType = c.DATA_TYPE,
+                                                              IsNullable = c.IS_NULLABLE,
+                                                              Length = c.LENGTH,
+                                                              Precision = c.PRECISION,
+                                                              Scale = c.SCALE,
+                                                              Collation = c.COLLATION
+                                                          }).ToArray()
+                                                      };
+
+                return new DBUserDefinedTableTypeCollection(userDefinedTableTypeDefinitions.ToList());
+            }
+            catch (Exception ex)
+            {
+                throw new DBSchemaHandlerException("Unable to establish connection or retrieve information from specified database", ex);
+            }
+
+        }
+
+        /// <summary>
         /// Breaks the connection string.
         /// </summary>
         /// <param name="ConnectionString">The connection string.</param>

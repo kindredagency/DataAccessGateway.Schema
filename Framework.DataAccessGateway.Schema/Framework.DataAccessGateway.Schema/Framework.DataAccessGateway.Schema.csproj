@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBUserDefinedTableTypeCollection.cs" />
     <Compile Include="DBSchemaConstraintDefinitionCollection.cs" />
     <Compile Include="DBSchemaStoredProcedureDefinitionCollection.cs" />
     <Compile Include="DBSchemaStoredProcedureParameterDefinition.cs" />
@@ -60,9 +61,11 @@
     <Compile Include="DBSchemaTableColumnDefinition.cs" />
     <Compile Include="DBSchemaTableDefinition.cs" />
     <Compile Include="DBSchemaTriggerDefinition.cs" />
+    <Compile Include="DBUserDefinedTableTypeDefinition.cs" />
     <Compile Include="_SQLActiveConnection.cs" />
     <Compile Include="_SQLConstraint.cs" />
     <Compile Include="_SQLDB.cs" />
+    <Compile Include="_SQLUserDefinedTableType.cs" />
     <Compile Include="_SQLView.cs" />
     <Compile Include="_SQLProc.cs" />
     <Compile Include="_SQLProcParameter.cs" />

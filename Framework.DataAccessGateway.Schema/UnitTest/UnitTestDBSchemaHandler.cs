@@ -131,5 +131,15 @@ namespace UnitTest
             Assert.AreNotEqual(views.Count, 0);
         }
 
+        [TestMethod]
+        public void GetUserDefinedTableTypes()
+        {
+            IDBSchemaHandler dbSchemaHandler = new DBSchemaHandler(ConnectionString, DBHandlerType.DbHandlerMSSQL);
+
+            var views = dbSchemaHandler.GetUserDefinedTableTypes();
+
+            Assert.AreNotEqual(views.Count, 0);
+        }
+
     }
 }

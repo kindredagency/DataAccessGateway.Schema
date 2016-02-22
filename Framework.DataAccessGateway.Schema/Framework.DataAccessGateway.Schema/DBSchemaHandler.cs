@@ -180,5 +180,24 @@ namespace Framework.DataAccessGateway.Schema
         {
             return independentDBHandler.GetConstraintDefinitionCollection();
         }
+
+        /// <summary>
+        /// Gets the user defined table types.
+        /// </summary>
+        /// <param name="typeName">Name of the type.</param>
+        /// <returns>DBUserDefinedTableTypeDefinition.</returns>
+        public DBUserDefinedTableTypeDefinition GetUserDefinedTableType(string typeName)
+        {
+            return independentDBHandler.GetUserDefinedTableType(typeName);
+        }
+
+        /// <summary>
+        /// Gets the user defined table types.
+        /// </summary>
+        /// <returns>DBUserDefinedTableTypeCollection.</returns>
+        public DBUserDefinedTableTypeCollection GetUserDefinedTableTypes()
+        {
+            return independentDBHandler.GetUserDefinedTableTypes();
+        }
     }
 }

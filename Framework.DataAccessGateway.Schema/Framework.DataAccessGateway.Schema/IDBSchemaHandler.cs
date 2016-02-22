@@ -100,5 +100,17 @@ namespace Framework.DataAccessGateway.Schema
         /// </summary>
         /// <returns>DBSchemaViewDefinitionCollection.</returns>
         DBSchemaViewDefinitionCollection GetViewListing();
+
+        /// <summary>
+        /// Gets the type of the user defined table.
+        /// </summary>
+        /// <returns>DBUserDefinedTableTypeDefinition.</returns>
+        DBUserDefinedTableTypeDefinition GetUserDefinedTableType(string typeName);
+
+        /// <summary>
+        /// Gets the user defined table types.
+        /// </summary>
+        /// <returns>DBUserDefinedTableTypeCollection.</returns>
+        DBUserDefinedTableTypeCollection GetUserDefinedTableTypes();
     }
 }
