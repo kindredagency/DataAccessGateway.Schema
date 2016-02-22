@@ -121,6 +121,15 @@ namespace UnitTest
             Assert.AreNotEqual(views.Count, 0);
         }
 
+        [TestMethod]
+        public void GetConstraintDefinitionCollection()
+        {
+            IDBSchemaHandler dbSchemaHandler = new DBSchemaHandler(ConnectionString, DBHandlerType.DbHandlerMSSQL);
+
+            var views = dbSchemaHandler.GetConstraintDefinitionCollection();
+
+            Assert.AreNotEqual(views.Count, 0);
+        }
 
     }
 }

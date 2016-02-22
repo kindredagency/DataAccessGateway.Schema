@@ -8,7 +8,17 @@ namespace Framework.DataAccessGateway.Schema
     /// </summary>
     public class DBSchemaConstraintDefinitionCollection : IList<DBSchemaConstraintDefinition>
     {   
-        private readonly List<DBSchemaConstraintDefinition> dbSchemaConstraintDefinitionList = new List<DBSchemaConstraintDefinition>();    
+        private readonly List<DBSchemaConstraintDefinition> dbSchemaConstraintDefinitionList = new List<DBSchemaConstraintDefinition>();
+
+        public DBSchemaConstraintDefinitionCollection()
+        {
+
+        }
+
+        public DBSchemaConstraintDefinitionCollection(List<DBSchemaConstraintDefinition> schemaConstraintDefinitionList)
+        {
+            dbSchemaConstraintDefinitionList = schemaConstraintDefinitionList;
+        }
 
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
@@ -66,7 +76,40 @@ namespace Framework.DataAccessGateway.Schema
         {
             get { return dbSchemaConstraintDefinitionList[index]; }
             set { dbSchemaConstraintDefinitionList[index] = value; }
-        }       
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="DBSchemaConstraintDefinition"/> with the specified name.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>DBSchemaConstraintDefinition.</returns>
+        public DBSchemaConstraintDefinition this[string name]
+        {
+            get
+            {
+                foreach (var dbSchemaConstraintDefinition in dbSchemaConstraintDefinitionList)
+                {
+                    if (dbSchemaConstraintDefinition.ConstraintName == name)
+                    {
+                        return dbSchemaConstraintDefinition;
+                    }
+                }
+
+                return null;
+            }
+            set
+            {
+                DBSchemaConstraintDefinition tempDBSchemaConstraintDefinition = null;
+                foreach (var dbSchemaConstraintDefinition in dbSchemaConstraintDefinitionList)
+                {
+                    if (dbSchemaConstraintDefinition.ConstraintName == name)
+                    {
+                        tempDBSchemaConstraintDefinition = dbSchemaConstraintDefinition;
+                    }
+                }
+                tempDBSchemaConstraintDefinition = value;
+            }
+        }
 
         /// <summary>
         /// Adds the specified item.

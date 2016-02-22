@@ -161,5 +161,24 @@ namespace Framework.DataAccessGateway.Schema
         {
             return independentDBHandler.GetViewListing();
         }
+
+        /// <summary>
+        /// Gets the constraint.
+        /// </summary>
+        /// <param name="constraintName">Name of the constraint.</param>
+        /// <returns>DBSchemaConstraintDefinition.</returns>
+        public DBSchemaConstraintDefinition GetConstraint(string constraintName)
+        {
+            return independentDBHandler.GetConstraint(constraintName);
+        }
+
+        /// <summary>
+        /// Gets the constraint definition collection.
+        /// </summary>
+        /// <returns>DBSchemaConstraintDefinitionCollection.</returns>
+        public DBSchemaConstraintDefinitionCollection GetConstraintDefinitionCollection()
+        {
+            return independentDBHandler.GetConstraintDefinitionCollection();
+        }
     }
 }

@@ -50,6 +50,19 @@ namespace Framework.DataAccessGateway.Schema
         DBSchemaTableDefinitionCollection GetTableDefinitionListing();
 
         /// <summary>
+        /// Gets the constraint.
+        /// </summary>
+        /// <param name="constraintName">Name of the constraint.</param>
+        /// <returns>DBSchemaConstraintDefinition.</returns>
+        DBSchemaConstraintDefinition GetConstraint(string constraintName);
+
+        /// <summary>
+        /// Gets the constraint definition collection.
+        /// </summary>
+        /// <returns>DBSchemaConstraintDefinitionCollection.</returns>
+        DBSchemaConstraintDefinitionCollection GetConstraintDefinitionCollection();
+
+        /// <summary>
         /// Gets the stored procedure definition.
         /// </summary>
         /// <param name="storedProcedureName">Name of the stored procedure.</param>
