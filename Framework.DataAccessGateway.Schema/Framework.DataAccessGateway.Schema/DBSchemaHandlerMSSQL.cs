@@ -280,6 +280,8 @@ namespace Framework.DataAccessGateway.Schema
                     dbSchemaTableColumnDefinition.DataType = table.TYPE.ToDBHandlerDataType();
                     dbSchemaTableColumnDefinition.DefaultValue = table.DEFAULT_VALUE;
                     dbSchemaTableColumnDefinition.Length = table.LENGTH;
+                    dbSchemaTableColumnDefinition.Precision = table.PRECISION;
+                    dbSchemaTableColumnDefinition.Scale = table.SCALE;
                     dbSchemaTableColumnDefinition.IsNullable = table.ISNULLABLE;
                     dbSchemaTableColumnDefinition.IsIdentity = table.ISIDENTITY;
                     dbSchemaTableColumnDefinition.IdentitySeed = table.IDENTITY_SEEDVALUE;
@@ -446,6 +448,8 @@ namespace Framework.DataAccessGateway.Schema
                         dbSchemaTableColumnDefinition.DataType = aTableDefinition.TYPE.ToDBHandlerDataType();
                         dbSchemaTableColumnDefinition.DefaultValue = aTableDefinition.DEFAULT_VALUE;
                         dbSchemaTableColumnDefinition.Length = aTableDefinition.LENGTH;
+                        dbSchemaTableColumnDefinition.Precision = aTableDefinition.PRECISION;
+                        dbSchemaTableColumnDefinition.Scale = aTableDefinition.SCALE;
                         dbSchemaTableColumnDefinition.IsNullable = aTableDefinition.ISNULLABLE;
                         dbSchemaTableColumnDefinition.IsIdentity = aTableDefinition.ISIDENTITY;
                         dbSchemaTableColumnDefinition.IdentitySeed = aTableDefinition.IDENTITY_SEEDVALUE;
