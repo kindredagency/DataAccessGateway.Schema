@@ -36,6 +36,18 @@
         public int? LENGTH { get; set; }
 
         /// <summary>
+        /// Gets or sets the precision.
+        /// </summary>
+        /// <value>The precision.</value>
+        public int? PRECISION { get; set; }
+
+        /// <summary>
+        /// Gets or sets the scale.
+        /// </summary>
+        /// <value>The scale.</value>
+        public int? SCALE { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this <see cref="_SQLTableDefinition"/> is isnullable.
         /// </summary>
         /// <value><c>true</c> if isnullable; otherwise, <c>false</c>.</value>

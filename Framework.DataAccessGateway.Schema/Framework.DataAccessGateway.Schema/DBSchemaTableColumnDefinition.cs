@@ -28,6 +28,18 @@ namespace Framework.DataAccessGateway.Schema
         public int? Length { get; set; }
 
         /// <summary>
+        /// Gets or sets the precision.
+        /// </summary>
+        /// <value>The precision.</value>
+        public int? Precision { get; set; }
+
+        /// <summary>
+        /// Gets or sets the scale.
+        /// </summary>
+        /// <value>The scale.</value>
+        public int? Scale { get; set; }
+
+        /// <summary>
         ///     States if it a primary key, foreign key etc.
         /// </summary>
         public DBSchemaConstraintDefinitionCollection DBSchemaConstraintDefinitionList

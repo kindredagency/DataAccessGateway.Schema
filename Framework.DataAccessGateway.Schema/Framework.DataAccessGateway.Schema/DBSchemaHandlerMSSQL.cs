@@ -165,13 +165,17 @@ namespace Framework.DataAccessGateway.Schema
                                         [TYPE]				        =	CD.[Data_Type],
                                         DEFAULT_VALUE		        =	CD.Column_Default,
                                         LENGTH				        =	CD.Character_Maximum_Length,
+                                        [PRECISION]				    =	CASE WHEN (CD.NUMERIC_PRECISION) IS NULL
+																		THEN CAST (CD.DATETIME_PRECISION as int) 
+																		ELSE CAST (CD.NUMERIC_PRECISION as int)
+																		END,	
+										[SCALE]						=	CD.NUMERIC_SCALE,			
                                         ISNULLABLE			        =	CASE(CD.Is_Nullable)
 						                                                WHEN 'YES'
 							                                                THEN CAST(1 AS BIT)
 						                                                ELSE
 							                                                CAST(0 AS BIT)
 						                                                END,
-
                                         ISIDENTITY			        =	CASE (Select 'True' FROM sys.identity_columns Where [Object_ID] = SO.ID AND Column_id = SC.colid )
 						                                                WHEN 'True'
 							                                                THEN CAST(1 AS BIT)
@@ -328,6 +332,11 @@ namespace Framework.DataAccessGateway.Schema
                             [TYPE]				        =	CD.[Data_Type],
                             DEFAULT_VALUE		        =	CD.Column_Default,
                             LENGTH				        =	CD.Character_Maximum_Length,
+                            [PRECISION]				    =	CASE WHEN (CD.NUMERIC_PRECISION) IS NULL
+																		THEN CAST (CD.DATETIME_PRECISION as int) 
+																		ELSE CAST (CD.NUMERIC_PRECISION as int)
+																		END,	
+							[SCALE]						=	CD.NUMERIC_SCALE,			
                             ISNULLABLE			        =	CASE(CD.Is_Nullable)
 						                                    WHEN 'YES'
 							                                    THEN CAST(1 AS BIT)
